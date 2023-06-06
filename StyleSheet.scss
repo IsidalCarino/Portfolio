@@ -84,7 +84,7 @@ section{
     position: relative;
     height: 100vh;
     width: 100%;
-    background-image: url(Medias/BGImage.png);
+    background-image: url(Medias/BG\ \(2\).jpg);
     background-size: cover;
     background-position: center;
     display: flex;
@@ -167,6 +167,9 @@ header.sticky{
 }
 /*ABOUT*/
 .about{
+    background-image: url(Medias/BG\ \(1\).jpg);
+    background-size: cover;
+    background-position: center;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
@@ -199,7 +202,9 @@ header.sticky{
 
 /*ART GALLERY*/
 .artgallery{
-    background: var(--second-bg-color);
+    background-image: url(Medias/ArtBG.jpg);
+    background-size: cover;
+    background-position: center;
 }
 .main-text{
     text-align: center;
@@ -242,12 +247,12 @@ header.sticky{
     bottom: 0;
     overflow: hidden;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     padding: 0 40px;
     transition: height 0.5s;
-    flex-direction: column;
 }
 .layer h5{
     font-size: 20px;
@@ -262,6 +267,11 @@ header.sticky{
 }
 
 /*SERVICES*/
+.services{
+    background-image: url(Medias/BG\ \(4\).jpg);
+    background-size: cover;
+    background-position: center;
+}
 .services-content{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, auto));
@@ -298,7 +308,9 @@ header.sticky{
 
 /*CONTACT*/
 .contact{
-    background: var(--bg-color);
+    background-image: url(Medias/BG\ \(3\).jpg);
+    background-size: cover;
+    background-position: center;
     display:grid;
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
@@ -385,4 +397,106 @@ header.sticky{
 .contact-form .submit:hover{
     transform: scale(1.1);
     cursor: pointer;
+}
+
+/*ENDING*/
+.end{
+    padding: 20px 15%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    background: var(--bg-color);
+}
+.last-text p{
+    color: var(--second-color);
+    font-size: 14px;
+}
+.gotop i{
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 15px;
+    color:var(--text-color);
+    background: var(--main-color);
+}
+
+@media (max-width: 1480px){
+    header{
+        padding: 12px 2.5%;
+        transition: .1s;
+    }
+    header.sticky{
+        padding: 10px 2.5%;
+        transition: .1s;
+    }
+    section{
+        padding: 11px 3% 60px;
+    }
+    .end{
+        padding: 15px 3%;
+    }
+}
+
+@media (max-width: 1100px){
+    :root{
+        --big-font: 4rem;
+        --h2-font: 2.5rem;
+        --p-font: 1rem;
+        transition: .1s;
+    }
+    .home-text h3 {
+        font-size: 2.5rem;
+    }
+    .home{
+        height: 87vh;
+    }
+}
+
+@media (max-width: 920px) {
+    .about{
+        grid-template-columns: 1fr;
+    }
+    .about-img{
+        text-align: center;
+        order: 2;
+    }
+    .about-img img{
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+    }
+    .contact{
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 820px){
+    #menu-icon{
+        display: block;
+    }
+    .navlist{
+        position:absolute;
+        top: -1000px;
+        right: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        background: var(--bg-color);
+        text-align: left;
+        transition: all .4s ease;
+    }
+    .navlist a{
+        display: block;
+        margin: 17px;
+        font-size: 20px;
+        transition: all .4s ease;
+        color: var(--text-color);
+    }
+    .navlist a:hover{
+        color: var(--main-color);
+    }
+    .navlist.open{
+        top: 100%;
+    }
 }
