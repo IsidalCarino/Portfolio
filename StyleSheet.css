@@ -170,4 +170,17 @@ section {
   font-weight: 600;
   color: var(--text-color);
   margin-left: 20px;
+}
+
+header.sticky {
+  background: var(--bg-color);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1019607843);
+  padding: 12px 15%;
+}
+
+.about {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  gap: 1.5rem;
 }/*# sourceMappingURL=StyleSheet.css.map */
