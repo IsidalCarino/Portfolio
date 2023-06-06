@@ -153,6 +153,7 @@ section {
   display: inline-block;
   padding: 12px 28px;
   background: var(--main-color);
+  color: var(--text-color);
   border-radius: 5px;
   font-size: 1rem;
   letter-spacing: 1px;
@@ -182,9 +183,7 @@ header.sticky {
 
 /*ABOUT*/
 .about {
-  background-image: url(Medias/BG\ \(1\).jpg);
-  background-size: cover;
-  background-position: center;
+  background: var(--bg-color);
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
@@ -220,9 +219,7 @@ header.sticky {
 
 /*ART GALLERY*/
 .artgallery {
-  background-image: url(Medias/ArtBG.jpg);
-  background-size: cover;
-  background-position: center;
+  background: var(--second-bg-color);
 }
 
 .main-text {
@@ -296,9 +293,7 @@ header.sticky {
 
 /*SERVICES*/
 .services {
-  background-image: url(Medias/BG\ \(4\).jpg);
-  background-size: cover;
-  background-position: center;
+  background: var(--bg-color);
 }
 
 .services-content {
@@ -506,7 +501,7 @@ header.sticky {
   }
   .about-img {
     text-align: center;
-    order: 2;
+    order: 1;
   }
   .about-img img {
     width: 100%;
