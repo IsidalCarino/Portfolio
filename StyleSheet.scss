@@ -10,7 +10,7 @@
 :root{
     --bg-color: #2a2a2a;
     --second-bg-color: #202020;
-    --text-color: #fff;
+    --text-color: white;
     --second-color: #ccc;
     --main-color: #ff4d05;
     --big-font: 5rem;
@@ -156,11 +156,5 @@ section{
     font-size: 15px;
     font-weight: 600;
     color:var(--text-color);
-    margin-left: 35px;
-}
-.btn2 span i{
-    height: 55px;
-    width: 55px;
-    background: var(--main-color);
-    color: var(var(--text-color));
+    margin-left: 20px;
 }
