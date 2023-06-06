@@ -495,3 +495,34 @@ header.sticky{
         top: 100%;
     }
 }
+
+@media (max-width: 580px){
+    .one{
+        display: inline-block;
+        margin-right: 15px;
+        height: 32px;
+        padding: 0 15px;
+        margin-top: 40px;
+        line-height: 32px;
+        font-size: 20px;
+        font-weight: 500;
+        border-radius: 5px;
+        color: var(--main-color);
+    }
+    .two{
+        display: inline-block;
+        color: var(--second-color);
+        font-size: 20px;
+        font-weight: 500;
+    }
+}
+
+@media (max-width: 345px){
+    .home-text h1{
+        font-size: 50px;
+        font-weight: 700;
+        color: var(--text-color);
+        line-height: 1.1;
+        margin: 0 0 8px;
+    }
+}
