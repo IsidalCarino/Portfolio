@@ -24,6 +24,7 @@ body {
   color: var(--text-color);
 }
 
+/*HEADER*/
 header {
   position: fixed;
   width: 100%;
@@ -83,6 +84,7 @@ section {
   padding: 160px 15% 120px;
 }
 
+/*HOME PAGE*/
 .home {
   position: relative;
   height: 100vh;
@@ -178,9 +180,42 @@ header.sticky {
   padding: 12px 15%;
 }
 
+/*ABOUT*/
 .about {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
   gap: 1.5rem;
+}
+
+.about-img img {
+  max-width: 530px;
+  height: auto;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.about-text h2 {
+  font-size: var(--h2-font);
+  line-height: 1;
+}
+
+.about-text h4 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-color);
+  line-height: 1.7;
+  margin: 15px 0 30px;
+}
+
+.about-text p {
+  color: var(--second-color);
+  font-size: var(--p-font);
+  line-height: 1.8;
+  margin-bottom: 4rem;
+}
+
+/*ART GALLERY*/
+.main-text {
+  text-align: center;
 }/*# sourceMappingURL=StyleSheet.css.map */
