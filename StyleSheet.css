@@ -543,11 +543,12 @@ header.sticky {
 }
 @media (max-width: 580px) {
   .one {
-    display: none;
+    display: inline-block;
     margin-right: 15px;
     height: 32px;
     padding: 0 15px;
     margin-top: 40px;
+    margin-bottom: 20px;
     line-height: 32px;
     font-size: 20px;
     font-weight: 500;
@@ -555,10 +556,11 @@ header.sticky {
     color: var(--main-color);
   }
   .two {
-    display: none;
+    display: inline-block;
     color: var(--second-color);
     font-size: 20px;
     font-weight: 500;
+    margin-bottom: 20px;
   }
 }
 @media (max-width: 345px) {
