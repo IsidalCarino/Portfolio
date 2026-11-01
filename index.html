@@ -889,37 +889,46 @@ body .title::after { background: var(--tx-burst-r) right -380px top -400px / 900
 .ch.rb { background: #FFD400; color: #0B0B0A; }
 .ch.m { background: none; color: inherit; box-shadow: none; padding-inline: 0.015em; margin-right: 0.025em; }
 
-/* home: name + menu on the left; player card, tagline and intro on the right */
-#screen-home .title-grid { min-height: 100%; padding-block: clamp(4px, 1.6vh, 20px) clamp(12px, 2.4vh, 28px);
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr); align-items: center; gap: clamp(24px, 4vw, 64px); }
-#screen-home .title-main { gap: clamp(8px, 1.4vh, 16px); }
-#screen-home .menu { position: relative; z-index: 2; margin-top: clamp(0px, 1vh, 10px); }
-.bigname { margin: 0; line-height: 0.92; }
-.bigname .rn { display: block; font-size: clamp(44px, min(6vw, 8.3vh), 120px); }
-.bigname .rw { display: block; }
-.bigname .rw + .rw { margin-top: 0.1em; }
-#screen-home .title-side { position: relative; z-index: 2; width: 100%; max-width: 560px; justify-self: end; display: flex; flex-direction: column; gap: clamp(10px, 1.8vh, 18px); }
-#screen-home .player { max-width: none; display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr); grid-template-areas: "hd hd" "ph st"; gap: 12px 18px; align-items: start; }
+/* home: the name across the top, then the menu (left) and the player card (right) */
+#screen-home .title-grid { min-height: 100%; max-width: none; padding-inline: max(20px, 4vw); padding-block: clamp(4px, 1.6vh, 20px) clamp(12px, 2.4vh, 28px);
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.55fr); grid-template-areas: "name name" "menu card"; align-content: center; align-items: start;
+  column-gap: clamp(24px, 4vw, 72px); row-gap: clamp(14px, 3vh, 40px); }
+#screen-home .title-main { display: contents; }
+#screen-home > .title { display: flex; flex-direction: column; }
+#screen-home > .title > .title-grid { flex: 1 0 auto; width: 100%; box-sizing: border-box; }
+#screen-home .bigname { grid-area: name; }
+#screen-home .menu { grid-area: menu; position: relative; z-index: 2; }
+#screen-home .player { grid-area: card; justify-self: end; width: 100%; max-width: 540px; position: relative; z-index: 2;
+  display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr); grid-template-areas: "hd hd" "ph st"; gap: 12px 18px; align-items: start; }
 #screen-home .player > .pixel { grid-area: hd; }
 #screen-home .player .reveal { grid-area: ph; }
 #screen-home .player .stats { grid-area: st; align-self: center; }
 #screen-home .player .stats div { grid-template-columns: minmax(0, 1fr); gap: 3px; padding: 8px 0; }
 #screen-home .player .stats div:first-child { border-top: 0; }
 #screen-home .player .stats dd { font-size: 14px; }
-#screen-home .player .reveal img { max-height: min(38vh, 360px); }
-#screen-home .side-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
-body #screen-home .side-copy .tagline { max-width: none; font-size: clamp(18px, min(1.8vw, 3.1vh), 27px); line-height: 1.22; padding: 12px 16px; }
-body #screen-home .side-copy .intro { max-width: none; font-size: clamp(14px, min(1.15vw, 2vh), 17px); }
-/* desktop: drop the small labels so the name can run big */
-@media (min-width: 901px) { #screen-home .title-main > .pixel { display: none; } }
+#screen-home .player .reveal img { max-height: min(40vh, 380px); }
+#screen-home .player::after { top: -34px; left: -40px; width: 52px; height: 52px; }
+.bigname { margin: 0; line-height: 0.92; position: relative; z-index: 2; }
+/* "ISIDAL KENT A. CARINO" is about 12.3em wide: fill the width, but leave room under it for the menu and card */
+.bigname .rn { display: block; font-size: clamp(48px, min(calc(92vw / 12.6), calc(20vh - 8px)), 200px); }
+.bigname .bn-l1 { display: block; white-space: nowrap; }
+.bigname .rw { display: inline-block; }
+.bn-sub { display: block; width: fit-content; margin-top: 0.45em; font: 700 max(16px, 0.24em)/1 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  letter-spacing: 0.12em; text-transform: uppercase; color: #FFF; background: #0B0B0A; padding: 0.4em 0.7em 0.34em; rotate: -1.5deg; box-shadow: 0.22em 0.22em 0 #FFD400; white-space: nowrap; }
 @media (min-width: 901px) and (max-height: 960px) { #screen-home .menu > .pixel { display: none; } }
 @media (min-width: 901px) and (max-height: 800px) {
-  .bigname .rn { font-size: clamp(44px, min(6vw, 7.5vh), 120px); }
   #screen-home .title-grid { padding-block: 4px 8px; }
   body #screen-home .menu a { padding-block: 1px; }
-  body #screen-home .menu a .t { font-size: clamp(20px, min(2.4vw, 3.2vh), 40px); }
-  #screen-home .player { gap: 8px 14px; padding: 12px; }
+  body #screen-home .menu a .t { font-size: clamp(22px, min(3vw, 5vh), 48px); }
+  #screen-home .player { padding: 12px; gap: 8px 14px; }
 }
+@media (max-width: 1100px) and (min-width: 901px) { #screen-home .title-grid { grid-template-columns: minmax(0, 1fr) minmax(300px, 0.8fr); } }
+
+/* roles and intro sit under the About heading */
+body #about .sec-head > .roles { margin-top: 4px; }
+/* Work: experience and projects share one screen, so close the gap between the two sections */
+#screen-work > .sec:first-child { padding-bottom: clamp(16px, 3vw, 40px); }
+#screen-work > .sec + .sec { padding-top: clamp(24px, 4vw, 56px); }
 
 /* the menu: ransom labels, a black skewed bar and a red pointer on the selected entry */
 body #screen-home .menu ul { background: none; border: 0; display: flex; flex-direction: column; align-items: flex-start; gap: clamp(0px, 0.5vh, 6px); padding: 0; }
@@ -930,7 +939,11 @@ body #screen-home .menu a:hover, body #screen-home .menu a:focus-visible { backg
 body #screen-home .menu a::before { content: ""; position: absolute; z-index: -1; left: -10px; top: 10%; height: 80%; width: 0; background: #0B0B0E;
   box-shadow: 7px 0 0 var(--accent-red); transform: skewX(-18deg); transition: width 0.2s cubic-bezier(0.7, 0, 0.3, 1); }
 body #screen-home .menu a .n { font: 700 13px/1 'Barlow Condensed', sans-serif; letter-spacing: 0.08em; color: #FFF; background: #0B0B0E; padding: 4px 5px 3px; rotate: -6deg; }
-body #screen-home .menu a .t { font-size: clamp(22px, min(2.4vw, 3.45vh), 40px); line-height: 1; text-shadow: none; white-space: nowrap; }
+body #screen-home .menu a .t { font-size: clamp(24px, min(3vw, 4.9vh), 52px); line-height: 1; text-shadow: none; white-space: nowrap; }
+body #screen-home .menu a { max-width: 100%; }
+body #screen-home .menu a .n { font-size: clamp(13px, 1vw, 17px); }
+body #screen-home .menu a .d { font-size: clamp(13px, 0.9vw, 16px); white-space: nowrap; }
+@media (max-width: 1100px) { body #screen-home .menu a .d { display: none; } }
 body #screen-home .menu a .t .rn { white-space: nowrap; }
 body #screen-home .menu a .d { font: 600 13px/1.2 'Barlow Condensed', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: #FFF; background: var(--accent-red);
   padding: 4px 7px 3px; opacity: 0; translate: -8px 0; transition: opacity 0.15s, translate 0.15s; }
@@ -989,8 +1002,8 @@ body .case-head { gap: 22px; }
   body #screen-home .menu a.sel .cur { animation: point 0.9s ease-in-out infinite; }
   @keyframes point { 50% { transform: translateX(-6px) scale(1.12); } }
   .bigname .rw { animation: line-bob 3s ease-in-out infinite alternate; }
-  .bigname .rw:nth-child(2) { animation-duration: 2.4s; animation-delay: -1s; }
-  .bigname .rw:nth-child(3) { animation-duration: 3.4s; animation-delay: -2s; }
+  .bigname .bn-l1 .rw:nth-child(3) { animation-duration: 2.4s; animation-delay: -1s; }
+  .bigname .bn-l1 .rw:nth-child(5) { animation-duration: 3.4s; animation-delay: -2s; }
   @keyframes line-bob { to { transform: translateY(-4px) rotate(-0.6deg); } }
 }
 
@@ -1003,14 +1016,20 @@ body .case-head { gap: 22px; }
 @media (min-width: 901px) { #screen-home .sparks i:is(:nth-child(2), :nth-child(3), :nth-child(4), :nth-child(5), :nth-child(9), :nth-child(10), :nth-child(12)) { display: none; } }
 @media (max-width: 900px) {
   #slash { display: none; }
-  #screen-home .title-grid { grid-template-columns: minmax(0, 1fr); align-items: start; }
-  #screen-home .title-side { justify-self: start; }
-  .bigname .rn { font-size: clamp(44px, 14.5vw, 96px); }
-  body #screen-home .menu a .t { font-size: clamp(24px, 7vw, 38px); }
+  #screen-home .title-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "name" "menu" "card"; align-content: start; padding-inline: 16px; }
+  #screen-home .player { justify-self: start; }
   #screen-home .player .reveal img { max-height: none; }
+  .bigname .rn { font-size: clamp(44px, 20vw, 110px); }
+  .bigname .bn-l1 { white-space: normal; }
+  .bigname .bn-l1 .rw { display: block; width: fit-content; }
+  .bigname .bn-l1 .rw + .rw { margin-top: 0.1em; }
+  .bigname .bn-l1 > .sp { display: none; }
+  .bn-sub { font-size: max(15px, 0.22em); }
+  body #screen-home .menu a .t { font-size: clamp(26px, 8.5vw, 44px); }
 }
 @media (max-width: 600px) { body .sec-head > .rh-long + .back { grid-column: 1 / -1; } }
 @media (max-width: 600px) {
+  body #screen-home .menu a .t, body #screen-home .menu a .t .rn { white-space: normal; }
   #screen-home .player { grid-template-columns: minmax(0, 1fr); grid-template-areas: "hd" "ph" "st"; }
   #screen-home .player .stats div { grid-template-columns: 82px minmax(0, 1fr); gap: 12px; }
 }
@@ -1098,8 +1117,7 @@ body:not([data-at="home"]) .back-big { display: inline-block; }
   }
   @keyframes tv-roll { from { transform: translateY(-110%); } to { transform: translateY(560%); } }
 }
-#screen-home .reveal-hint { background: #0B0B0A; color: #FFD400; border: 2px solid #0B0B0A; }
-#screen-home .player::after { top: -34px; left: -40px; width: 52px; height: 52px; }
+.player .reveal-hint { background: #0B0B0A; color: #FFD400; border: 2px solid #0B0B0A; }
 body:not([data-at="home"]) #hud-bottom .k-enter { display: none; }
 
 </style>
@@ -1125,24 +1143,20 @@ body:not([data-at="home"]) #hud-bottom .k-enter { display: none; }
 <div class="sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 <div class="wrap title-grid">
 <div class="title-main">
-<p class="pixel">Portfolio · 2021 – 2026</p>
-<h1 class="bigname"><span class="vh">Isidal Kent A. Carino</span><span class="rn" aria-hidden="true" style="--n:7"><span class="rw"><span class="ch w" style="--r:0.6deg;--s:1.00;--y:-0.03em;--i:0">I</span><span class="ch k" style="--r:0.3deg;--s:1.04;--y:-0.03em;--i:1">S</span><span class="ch w" style="--r:0.0deg;--s:1.00;--y:-0.03em;--i:2">I</span><span class="ch rb" style="--r:-0.5deg;--s:1.02;--y:-0.02em;--i:3">D</span><span class="ch w" style="--r:-0.3deg;--s:1.00;--y:0.02em;--i:4">A</span><span class="ch w" style="--r:-1.5deg;--s:1.00;--y:-0.02em;--i:5">L</span></span><span class="rw"><span class="ch k" style="--r:0.6deg;--s:1.04;--y:0.03em;--i:6">K</span><span class="ch w" style="--r:-1.8deg;--s:1.00;--y:0.02em;--i:7">E</span><span class="ch w" style="--r:-0.8deg;--s:1.00;--y:-0.02em;--i:8">N</span><span class="ch w" style="--r:-1.5deg;--s:1.00;--y:-0.01em;--i:9">T</span><span class="sp"></span><span class="ch rb" style="--r:2.5deg;--s:1.03;--y:0.00em;--i:10">A</span><span class="ch w" style="--r:0.6deg;--s:1.00;--y:-0.01em;--i:11">.</span></span><span class="rw"><span class="ch k" style="--r:0.5deg;--s:1.06;--y:-0.00em;--i:12">C</span><span class="ch w" style="--r:0.1deg;--s:1.00;--y:0.02em;--i:13">A</span><span class="ch w" style="--r:-0.1deg;--s:1.00;--y:0.03em;--i:14">R</span><span class="ch w" style="--r:-0.6deg;--s:1.00;--y:-0.02em;--i:15">I</span><span class="ch rb" style="--r:-2.6deg;--s:1.07;--y:-0.03em;--i:16">N</span><span class="ch w" style="--r:-0.8deg;--s:1.00;--y:-0.00em;--i:17">O</span></span></span></h1>
-<ul class="roles" aria-label="Roles"><li>Co-Founder &amp; CMO</li><li>Designer</li></ul>
+<h1 class="bigname"><span class="vh">Isidal Kent A. Carino, Digital Portfolio</span><span class="rn" aria-hidden="true"><span class="bn-l1"><span class="rw"><span class="ch w" style="--r:0.6deg;--s:1.00;--y:-0.03em;--i:0">I</span><span class="ch k" style="--r:0.3deg;--s:1.04;--y:-0.03em;--i:1">S</span><span class="ch w" style="--r:0.0deg;--s:1.00;--y:-0.03em;--i:2">I</span><span class="ch rb" style="--r:-0.5deg;--s:1.02;--y:-0.02em;--i:3">D</span><span class="ch w" style="--r:-0.3deg;--s:1.00;--y:0.02em;--i:4">A</span><span class="ch w" style="--r:-1.5deg;--s:1.00;--y:-0.02em;--i:5">L</span></span><span class="sp"></span><span class="rw"><span class="ch k" style="--r:0.6deg;--s:1.04;--y:0.03em;--i:6">K</span><span class="ch w" style="--r:-1.8deg;--s:1.00;--y:0.02em;--i:7">E</span><span class="ch w" style="--r:-0.8deg;--s:1.00;--y:-0.02em;--i:8">N</span><span class="ch w" style="--r:-1.5deg;--s:1.00;--y:-0.01em;--i:9">T</span><span class="sp"></span><span class="ch rb" style="--r:2.5deg;--s:1.03;--y:0.00em;--i:10">A</span><span class="ch w" style="--r:0.6deg;--s:1.00;--y:-0.01em;--i:11">.</span></span><span class="sp"></span><span class="rw"><span class="ch k" style="--r:0.5deg;--s:1.06;--y:-0.00em;--i:12">C</span><span class="ch w" style="--r:0.1deg;--s:1.00;--y:0.02em;--i:13">A</span><span class="ch w" style="--r:-0.1deg;--s:1.00;--y:0.03em;--i:14">R</span><span class="ch w" style="--r:-0.6deg;--s:1.00;--y:-0.02em;--i:15">I</span><span class="ch rb" style="--r:-2.6deg;--s:1.07;--y:-0.03em;--i:16">N</span><span class="ch w" style="--r:-0.8deg;--s:1.00;--y:-0.00em;--i:17">O</span></span></span><span class="bn-sub">Digital Portfolio</span></span></h1>
 <nav class="menu" aria-label="Sections">
 <p class="pixel">Select</p>
 <ul>
-<li><a href="#about" style="--c:var(--water)"><span class="cur" aria-hidden="true"></span><span class="n">01</span><span class="t"><span class="vh">About</span><span class="rn" aria-hidden="true" style="--n:5"><span class="rw"><span class="ch m" style="--r:0.3deg;--s:1.00;--y:-0.02em;--i:0">A</span><span class="ch m" style="--r:0.6deg;--s:1.00;--y:-0.00em;--i:1">B</span><span class="ch m" style="--r:1.7deg;--s:1.00;--y:0.02em;--i:2">O</span><span class="ch m" style="--r:1.8deg;--s:1.00;--y:-0.02em;--i:3">U</span><span class="ch rb" style="--r:2.2deg;--s:1.03;--y:0.02em;--i:4">T</span></span></span></span><span class="d">Bio · Education</span></a></li>
-<li><a href="#arsenal" style="--c:var(--electric)"><span class="cur" aria-hidden="true"></span><span class="n">02</span><span class="t"><span class="vh">Arsenal</span><span class="rn" aria-hidden="true" style="--n:7"><span class="rw"><span class="ch m" style="--r:0.2deg;--s:1.00;--y:0.01em;--i:0">A</span><span class="ch m" style="--r:-0.2deg;--s:1.00;--y:0.00em;--i:1">R</span><span class="ch m" style="--r:-0.7deg;--s:1.00;--y:0.01em;--i:2">S</span><span class="ch m" style="--r:-0.3deg;--s:1.00;--y:-0.03em;--i:3">E</span><span class="ch m" style="--r:-0.1deg;--s:1.00;--y:0.00em;--i:4">N</span><span class="ch rb" style="--r:2.7deg;--s:1.07;--y:0.01em;--i:5">A</span><span class="ch m" style="--r:0.4deg;--s:1.00;--y:0.01em;--i:6">L</span></span></span></span><span class="d">Tools · Languages</span></a></li>
-<li><a href="#quests" style="--c:var(--normal)"><span class="cur" aria-hidden="true"></span><span class="n">03</span><span class="t"><span class="vh">Quest log</span><span class="rn" aria-hidden="true" style="--n:5"><span class="rw"><span class="ch m" style="--r:1.9deg;--s:1.00;--y:0.01em;--i:0">Q</span><span class="ch m" style="--r:2.0deg;--s:1.00;--y:0.01em;--i:1">U</span><span class="ch m" style="--r:0.8deg;--s:1.00;--y:-0.01em;--i:2">E</span><span class="ch rb" style="--r:-3.8deg;--s:1.07;--y:-0.02em;--i:3">S</span><span class="ch m" style="--r:-1.3deg;--s:1.00;--y:-0.00em;--i:4">T</span></span><span class="sp"></span><span class="rw"><span class="ch m" style="--r:-0.1deg;--s:1.00;--y:0.01em;--i:5">L</span><span class="ch m" style="--r:-1.7deg;--s:1.00;--y:-0.02em;--i:6">O</span><span class="ch rb" style="--r:0.2deg;--s:1.06;--y:-0.02em;--i:7">G</span></span></span></span><span class="d">Experience</span></a></li>
-<li><a href="#matech" style="--c:var(--psychic)"><span class="cur" aria-hidden="true"></span><span class="n">04</span><span class="t"><span class="vh">Matech work</span><span class="rn" aria-hidden="true" style="--n:6"><span class="rw"><span class="ch m" style="--r:-0.6deg;--s:1.00;--y:0.02em;--i:0">M</span><span class="ch rb" style="--r:-0.4deg;--s:1.04;--y:0.01em;--i:1">A</span><span class="ch m" style="--r:-1.2deg;--s:1.00;--y:-0.00em;--i:2">T</span><span class="ch m" style="--r:1.3deg;--s:1.00;--y:0.01em;--i:3">E</span><span class="ch m" style="--r:0.8deg;--s:1.00;--y:0.00em;--i:4">C</span><span class="ch m" style="--r:-0.6deg;--s:1.00;--y:-0.01em;--i:5">H</span></span><span class="sp"></span><span class="rw"><span class="ch m" style="--r:-0.9deg;--s:1.00;--y:-0.01em;--i:6">W</span><span class="ch m" style="--r:-1.4deg;--s:1.00;--y:-0.01em;--i:7">O</span><span class="ch rb" style="--r:-3.4deg;--s:1.04;--y:0.01em;--i:8">R</span><span class="ch m" style="--r:-1.8deg;--s:1.00;--y:-0.01em;--i:9">K</span></span></span></span><span class="d">CerePay · Cerebro</span></a></li>
-<li><a href="#projects" style="--c:var(--fire)"><span class="cur" aria-hidden="true"></span><span class="n">05</span><span class="t"><span class="vh">Stage select</span><span class="rn" aria-hidden="true" style="--n:6"><span class="rw"><span class="ch m" style="--r:-0.9deg;--s:1.00;--y:0.02em;--i:0">S</span><span class="ch m" style="--r:2.0deg;--s:1.00;--y:0.02em;--i:1">T</span><span class="ch m" style="--r:0.2deg;--s:1.00;--y:-0.03em;--i:2">A</span><span class="ch m" style="--r:0.1deg;--s:1.00;--y:-0.03em;--i:3">G</span><span class="ch rb" style="--r:3.7deg;--s:1.03;--y:-0.03em;--i:4">E</span></span><span class="sp"></span><span class="rw"><span class="ch m" style="--r:1.3deg;--s:1.00;--y:-0.02em;--i:5">S</span><span class="ch m" style="--r:-0.0deg;--s:1.00;--y:0.03em;--i:6">E</span><span class="ch m" style="--r:0.1deg;--s:1.00;--y:-0.03em;--i:7">L</span><span class="ch m" style="--r:-1.3deg;--s:1.00;--y:-0.01em;--i:8">E</span><span class="ch m" style="--r:-0.3deg;--s:1.00;--y:0.02em;--i:9">C</span><span class="ch rb" style="--r:-2.2deg;--s:1.06;--y:-0.03em;--i:10">T</span></span></span></span><span class="d">10 projects</span></a></li>
-<li><a href="#art" style="--c:var(--fairy)"><span class="cur" aria-hidden="true"></span><span class="n">06</span><span class="t"><span class="vh">Art gallery</span><span class="rn" aria-hidden="true" style="--n:7"><span class="rw"><span class="ch rb" style="--r:3.2deg;--s:1.03;--y:0.01em;--i:0">A</span><span class="ch m" style="--r:1.5deg;--s:1.00;--y:-0.02em;--i:1">R</span><span class="ch m" style="--r:-0.1deg;--s:1.00;--y:-0.00em;--i:2">T</span></span><span class="sp"></span><span class="rw"><span class="ch m" style="--r:1.3deg;--s:1.00;--y:-0.00em;--i:3">G</span><span class="ch m" style="--r:-0.3deg;--s:1.00;--y:-0.02em;--i:4">A</span><span class="ch m" style="--r:-1.0deg;--s:1.00;--y:0.02em;--i:5">L</span><span class="ch m" style="--r:-1.6deg;--s:1.00;--y:-0.03em;--i:6">L</span><span class="ch rb" style="--r:3.4deg;--s:1.07;--y:-0.03em;--i:7">E</span><span class="ch m" style="--r:0.5deg;--s:1.00;--y:0.02em;--i:8">R</span><span class="ch m" style="--r:1.1deg;--s:1.00;--y:0.00em;--i:9">Y</span></span></span></span><span class="d">13 drawings</span></a></li>
-<li><a href="#achievements" style="--c:var(--gold)"><span class="cur" aria-hidden="true"></span><span class="n">07</span><span class="t"><span class="vh">Achievements</span><span class="rn" aria-hidden="true" style="--n:12"><span class="rw"><span class="ch m" style="--r:1.7deg;--s:1.00;--y:-0.02em;--i:0">A</span><span class="ch m" style="--r:-0.1deg;--s:1.00;--y:-0.01em;--i:1">C</span><span class="ch m" style="--r:0.1deg;--s:1.00;--y:0.02em;--i:2">H</span><span class="ch m" style="--r:-0.2deg;--s:1.00;--y:-0.01em;--i:3">I</span><span class="ch m" style="--r:2.0deg;--s:1.00;--y:-0.02em;--i:4">E</span><span class="ch m" style="--r:-1.6deg;--s:1.00;--y:0.01em;--i:5">V</span><span class="ch m" style="--r:-0.7deg;--s:1.00;--y:-0.02em;--i:6">E</span><span class="ch m" style="--r:0.6deg;--s:1.00;--y:0.02em;--i:7">M</span><span class="ch m" style="--r:0.6deg;--s:1.00;--y:0.00em;--i:8">E</span><span class="ch rb" style="--r:3.0deg;--s:1.04;--y:-0.02em;--i:9">N</span><span class="ch m" style="--r:1.1deg;--s:1.00;--y:-0.01em;--i:10">T</span><span class="ch m" style="--r:2.0deg;--s:1.00;--y:0.00em;--i:11">S</span></span></span></span><span class="d">3 unlocked</span></a></li>
-<li><a href="#contact" style="--c:var(--grass)"><span class="cur" aria-hidden="true"></span><span class="n">08</span><span class="t"><span class="vh">Contact</span><span class="rn" aria-hidden="true" style="--n:7"><span class="rw"><span class="ch m" style="--r:1.0deg;--s:1.00;--y:-0.02em;--i:0">C</span><span class="ch m" style="--r:1.5deg;--s:1.00;--y:0.02em;--i:1">O</span><span class="ch m" style="--r:-0.0deg;--s:1.00;--y:0.01em;--i:2">N</span><span class="ch rb" style="--r:0.7deg;--s:1.06;--y:0.02em;--i:3">T</span><span class="ch m" style="--r:-1.7deg;--s:1.00;--y:-0.03em;--i:4">A</span><span class="ch m" style="--r:0.4deg;--s:1.00;--y:0.03em;--i:5">C</span><span class="ch m" style="--r:1.0deg;--s:1.00;--y:-0.02em;--i:6">T</span></span></span></span><span class="d">Next quest</span></a></li>
+<li><a href="#about"><span class="cur" aria-hidden="true"></span><span class="n">01</span><span class="t"><span class="vh">About</span><span class="rn" aria-hidden="true" style="--n:5"><span class="rw"><span class="ch m" style="--r:0.3deg;--s:1.00;--y:-0.02em;--i:0">A</span><span class="ch m" style="--r:0.6deg;--s:1.00;--y:-0.00em;--i:1">B</span><span class="ch m" style="--r:1.7deg;--s:1.00;--y:0.02em;--i:2">O</span><span class="ch m" style="--r:1.8deg;--s:1.00;--y:-0.02em;--i:3">U</span><span class="ch rb" style="--r:2.2deg;--s:1.03;--y:0.02em;--i:4">T</span></span></span></span><span class="d">Bio · Education</span></a></li>
+<li><a href="#matech"><span class="cur" aria-hidden="true"></span><span class="n">02</span><span class="t"><span class="vh">Matech Work</span><span class="rn" aria-hidden="true" style="--n:6"><span class="rw"><span class="ch m" style="--r:0.7deg;--s:1.00;--y:0.02em;--i:0">M</span><span class="ch m" style="--r:1.7deg;--s:1.00;--y:-0.00em;--i:1">A</span><span class="ch m" style="--r:2.0deg;--s:1.00;--y:-0.02em;--i:2">T</span><span class="ch m" style="--r:-1.5deg;--s:1.00;--y:0.03em;--i:3">E</span><span class="ch m" style="--r:-0.1deg;--s:1.00;--y:-0.00em;--i:4">C</span><span class="ch rb" style="--r:-2.7deg;--s:1.06;--y:-0.02em;--i:5">H</span></span><span class="sp"></span><span class="rw"><span class="ch rb" style="--r:-2.2deg;--s:1.05;--y:-0.01em;--i:6">W</span><span class="ch m" style="--r:-1.6deg;--s:1.00;--y:-0.02em;--i:7">O</span><span class="ch m" style="--r:0.4deg;--s:1.00;--y:-0.02em;--i:8">R</span><span class="ch m" style="--r:-1.7deg;--s:1.00;--y:0.02em;--i:9">K</span></span></span></span><span class="d">CerePay · Cerebro</span></a></li>
+<li><a href="#work"><span class="cur" aria-hidden="true"></span><span class="n">03</span><span class="t"><span class="vh">Work Experience and Projects</span><span class="rn" aria-hidden="true" style="--n:10"><span class="rw"><span class="ch m" style="--r:0.6deg;--s:1.00;--y:-0.02em;--i:0">W</span><span class="ch rb" style="--r:-3.3deg;--s:1.05;--y:0.01em;--i:1">O</span><span class="ch m" style="--r:-0.7deg;--s:1.00;--y:0.02em;--i:2">R</span><span class="ch m" style="--r:0.5deg;--s:1.00;--y:0.01em;--i:3">K</span></span><span class="sp"></span><span class="rw"><span class="ch rb" style="--r:-3.5deg;--s:1.03;--y:0.02em;--i:4">E</span><span class="ch m" style="--r:-0.5deg;--s:1.00;--y:-0.01em;--i:5">X</span><span class="ch m" style="--r:1.5deg;--s:1.00;--y:-0.03em;--i:6">P</span><span class="ch m" style="--r:-1.0deg;--s:1.00;--y:-0.02em;--i:7">E</span><span class="ch m" style="--r:-0.7deg;--s:1.00;--y:0.01em;--i:8">R</span><span class="ch m" style="--r:-1.9deg;--s:1.00;--y:0.02em;--i:9">I</span><span class="ch m" style="--r:-0.7deg;--s:1.00;--y:0.02em;--i:10">E</span><span class="ch m" style="--r:1.1deg;--s:1.00;--y:0.00em;--i:11">N</span><span class="ch m" style="--r:-0.9deg;--s:1.00;--y:0.01em;--i:12">C</span><span class="ch m" style="--r:-1.7deg;--s:1.00;--y:-0.02em;--i:13">E</span></span><span class="sp"></span><span class="rw"><span class="ch m" style="--r:-1.3deg;--s:1.00;--y:0.01em;--i:14">A</span><span class="ch rb" style="--r:-1.2deg;--s:1.05;--y:0.02em;--i:15">N</span><span class="ch m" style="--r:0.4deg;--s:1.00;--y:0.01em;--i:16">D</span></span><span class="sp"></span><span class="rw"><span class="ch m" style="--r:-0.5deg;--s:1.00;--y:-0.03em;--i:17">P</span><span class="ch m" style="--r:1.0deg;--s:1.00;--y:0.02em;--i:18">R</span><span class="ch m" style="--r:-0.3deg;--s:1.00;--y:-0.01em;--i:19">O</span><span class="ch m" style="--r:1.3deg;--s:1.00;--y:0.02em;--i:20">J</span><span class="ch m" style="--r:-0.9deg;--s:1.00;--y:0.00em;--i:21">E</span><span class="ch rb" style="--r:-1.1deg;--s:1.06;--y:0.03em;--i:22">C</span><span class="ch m" style="--r:1.9deg;--s:1.00;--y:-0.03em;--i:23">T</span><span class="ch m" style="--r:0.1deg;--s:1.00;--y:0.00em;--i:24">S</span></span></span></span><span class="d">Jobs · Projects</span></a></li>
+<li><a href="#art"><span class="cur" aria-hidden="true"></span><span class="n">04</span><span class="t"><span class="vh">Art Gallery</span><span class="rn" aria-hidden="true" style="--n:7"><span class="rw"><span class="ch m" style="--r:-0.5deg;--s:1.00;--y:-0.00em;--i:0">A</span><span class="ch rb" style="--r:-0.2deg;--s:1.04;--y:-0.02em;--i:1">R</span><span class="ch m" style="--r:1.3deg;--s:1.00;--y:-0.03em;--i:2">T</span></span><span class="sp"></span><span class="rw"><span class="ch m" style="--r:1.6deg;--s:1.00;--y:0.01em;--i:3">G</span><span class="ch m" style="--r:-0.5deg;--s:1.00;--y:0.01em;--i:4">A</span><span class="ch m" style="--r:-0.9deg;--s:1.00;--y:-0.01em;--i:5">L</span><span class="ch m" style="--r:-1.6deg;--s:1.00;--y:-0.00em;--i:6">L</span><span class="ch rb" style="--r:1.3deg;--s:1.04;--y:-0.01em;--i:7">E</span><span class="ch m" style="--r:-0.3deg;--s:1.00;--y:-0.02em;--i:8">R</span><span class="ch m" style="--r:0.3deg;--s:1.00;--y:-0.00em;--i:9">Y</span></span></span></span><span class="d">13 drawings</span></a></li>
+<li><a href="#achievements"><span class="cur" aria-hidden="true"></span><span class="n">05</span><span class="t"><span class="vh">Achievements</span><span class="rn" aria-hidden="true" style="--n:12"><span class="rw"><span class="ch m" style="--r:1.7deg;--s:1.00;--y:-0.02em;--i:0">A</span><span class="ch m" style="--r:-0.1deg;--s:1.00;--y:-0.01em;--i:1">C</span><span class="ch m" style="--r:0.1deg;--s:1.00;--y:0.02em;--i:2">H</span><span class="ch m" style="--r:-0.2deg;--s:1.00;--y:-0.01em;--i:3">I</span><span class="ch m" style="--r:2.0deg;--s:1.00;--y:-0.02em;--i:4">E</span><span class="ch m" style="--r:-1.6deg;--s:1.00;--y:0.01em;--i:5">V</span><span class="ch m" style="--r:-0.7deg;--s:1.00;--y:-0.02em;--i:6">E</span><span class="ch m" style="--r:0.6deg;--s:1.00;--y:0.02em;--i:7">M</span><span class="ch m" style="--r:0.6deg;--s:1.00;--y:0.00em;--i:8">E</span><span class="ch rb" style="--r:3.0deg;--s:1.04;--y:-0.02em;--i:9">N</span><span class="ch m" style="--r:1.1deg;--s:1.00;--y:-0.01em;--i:10">T</span><span class="ch m" style="--r:2.0deg;--s:1.00;--y:0.00em;--i:11">S</span></span></span></span><span class="d">3 unlocked</span></a></li>
+<li><a href="#tools"><span class="cur" aria-hidden="true"></span><span class="n">06</span><span class="t"><span class="vh">Tools and Skills</span><span class="rn" aria-hidden="true" style="--n:6"><span class="rw"><span class="ch m" style="--r:-1.9deg;--s:1.00;--y:0.03em;--i:0">T</span><span class="ch m" style="--r:-0.6deg;--s:1.00;--y:-0.02em;--i:1">O</span><span class="ch m" style="--r:0.4deg;--s:1.00;--y:0.00em;--i:2">O</span><span class="ch m" style="--r:1.1deg;--s:1.00;--y:0.01em;--i:3">L</span><span class="ch rb" style="--r:-2.3deg;--s:1.05;--y:-0.03em;--i:4">S</span></span><span class="sp"></span><span class="rw"><span class="ch m" style="--r:-0.3deg;--s:1.00;--y:0.02em;--i:5">A</span><span class="ch m" style="--r:-0.6deg;--s:1.00;--y:0.03em;--i:6">N</span><span class="ch rb" style="--r:-1.9deg;--s:1.02;--y:-0.01em;--i:7">D</span></span><span class="sp"></span><span class="rw"><span class="ch m" style="--r:-1.7deg;--s:1.00;--y:0.02em;--i:8">S</span><span class="ch m" style="--r:0.3deg;--s:1.00;--y:0.02em;--i:9">K</span><span class="ch m" style="--r:0.9deg;--s:1.00;--y:-0.03em;--i:10">I</span><span class="ch m" style="--r:-0.1deg;--s:1.00;--y:-0.02em;--i:11">L</span><span class="ch rb" style="--r:-1.1deg;--s:1.06;--y:-0.01em;--i:12">L</span><span class="ch m" style="--r:0.1deg;--s:1.00;--y:0.01em;--i:13">S</span></span></span></span><span class="d">Software · Languages</span></a></li>
+<li><a href="#contact"><span class="cur" aria-hidden="true"></span><span class="n">07</span><span class="t"><span class="vh">Contact</span><span class="rn" aria-hidden="true" style="--n:7"><span class="rw"><span class="ch m" style="--r:1.0deg;--s:1.00;--y:-0.02em;--i:0">C</span><span class="ch m" style="--r:1.5deg;--s:1.00;--y:0.02em;--i:1">O</span><span class="ch m" style="--r:-0.0deg;--s:1.00;--y:0.01em;--i:2">N</span><span class="ch rb" style="--r:0.7deg;--s:1.06;--y:0.02em;--i:3">T</span><span class="ch m" style="--r:-1.7deg;--s:1.00;--y:-0.03em;--i:4">A</span><span class="ch m" style="--r:0.4deg;--s:1.00;--y:0.03em;--i:5">C</span><span class="ch m" style="--r:1.0deg;--s:1.00;--y:-0.02em;--i:6">T</span></span></span></span><span class="d">Next quest</span></a></li>
 </ul>
 </nav>
 </div>
-<div class="title-side">
 <aside class="player pnl" aria-label="Player card">
 <p class="pixel"><span>Player 1</span><span>Lv. CMO</span></p>
 <div class="reveal" tabindex="0" role="button" aria-pressed="false" aria-label="Reveal portrait"><img src="img/portrait.webp?v=e908dadb" width="700" height="874" alt="Portrait of Isidal Kent A. Carino in a red blazer and yellow tie"><img class="sil" src="img/portrait-sil.webp?v=275892cc" width="700" height="874" alt="" aria-hidden="true"><span class="reveal-hint" aria-hidden="true"><span class="h-hover">Hover to reveal</span><span class="h-tap">Tap to reveal</span></span></div>
@@ -1155,10 +1169,6 @@ body:not([data-at="home"]) #hud-bottom .k-enter { display: none; }
 </dl>
 
 </aside>
-<div class="side-copy">
-<p class="intro">I lead brand and design at Matech. Before that I built games, apps and a talking robot, and I still draw, test and direct skits whenever I can.</p>
-</div>
-</div>
 </div>
 </header>
 </div>
@@ -1168,6 +1178,8 @@ body:not([data-at="home"]) #hud-bottom .k-enter { display: none; }
 <div class="sec-head">
 <p class="pixel">01 · About me</p>
 <h2 class="rh" id="about-title" tabindex="-1"><span class="vh">Hi there!</span><span class="rn" aria-hidden="true" style="--n:6"><span class="rw"><span class="ch w" style="--r:-0.8deg;--s:1.00;--y:-0.01em;--i:0">H</span><span class="ch k" style="--r:-0.5deg;--s:1.02;--y:0.01em;--i:1">I</span></span><span class="sp"></span><span class="rw"><span class="ch w" style="--r:1.9deg;--s:1.00;--y:0.03em;--i:2">T</span><span class="ch rb" style="--r:-2.7deg;--s:1.03;--y:0.01em;--i:3">H</span><span class="ch w" style="--r:0.2deg;--s:1.00;--y:-0.02em;--i:4">E</span><span class="ch k" style="--r:-0.6deg;--s:1.02;--y:0.02em;--i:5">R</span><span class="ch w" style="--r:1.4deg;--s:1.00;--y:0.01em;--i:6">E</span><span class="ch w" style="--r:-1.9deg;--s:1.00;--y:-0.02em;--i:7">!</span></span></span></h2><button class="back" type="button" data-back><span class="arr" aria-hidden="true">◀</span> Back<span class="k"> · Esc</span></button>
+<ul class="roles" aria-label="Roles"><li>Co-Founder &amp; CMO</li><li>Designer</li></ul>
+<p>I lead brand and design at Matech. Before that I built games, apps and a talking robot, and I still draw, test and direct skits whenever I can.</p>
 </div>
 <div class="about">
 <div class="bio pnl">
@@ -1201,91 +1213,11 @@ body:not([data-at="home"]) #hud-bottom .k-enter { display: none; }
 </section>
 </div>
 
-<div class="screen" id="screen-arsenal" data-sid="arsenal" data-label="02 · Arsenal">
-<section class="sec sec-alt gray pat-dots" id="arsenal" style="--c:var(--electric)" aria-labelledby="arsenal-title">
-<div class="wrap">
-<div class="sec-head">
-<div class="crowd" aria-hidden="true"><i></i><i></i><i></i></div>
-<p class="pixel">02 · Skills and tools</p>
-<h2 class="rh" id="arsenal-title" tabindex="-1"><span class="vh">My arsenal</span><span class="rn" aria-hidden="true" style="--n:7"><span class="rw"><span class="ch w" style="--r:1.7deg;--s:1.00;--y:-0.02em;--i:0">M</span><span class="ch k" style="--r:1.9deg;--s:1.08;--y:-0.01em;--i:1">Y</span></span><span class="sp"></span><span class="rw"><span class="ch rb" style="--r:2.6deg;--s:1.08;--y:-0.02em;--i:2">A</span><span class="ch w" style="--r:-0.5deg;--s:1.00;--y:-0.02em;--i:3">R</span><span class="ch w" style="--r:-0.9deg;--s:1.00;--y:0.02em;--i:4">S</span><span class="ch w" style="--r:-0.2deg;--s:1.00;--y:-0.01em;--i:5">E</span><span class="ch w" style="--r:-1.7deg;--s:1.00;--y:-0.01em;--i:6">N</span><span class="ch k" style="--r:-0.5deg;--s:1.05;--y:-0.03em;--i:7">A</span><span class="ch w" style="--r:-1.5deg;--s:1.00;--y:-0.03em;--i:8">L</span></span></span></h2><button class="back" type="button" data-back><span class="arr" aria-hidden="true">◀</span> Back<span class="k"> · Esc</span></button>
-<p>Give me any tool, I'll give you good work.</p>
-</div>
-<div class="kit">
-<article class="kit-card pnl"><p class="pixel">Slot 01</p><h3>Design &amp; video</h3><ul class="tools"><li>Photoshop</li><li>Illustrator</li><li>Figma</li><li>Canva</li><li>MediBang</li><li>CapCut</li></ul></article>
-<article class="kit-card pnl"><p class="pixel">Slot 02</p><h3>Code</h3><ul class="tools"><li>C++</li><li>Python</li><li>C#</li><li>PHP</li><li>Kotlin</li><li>Unity</li><li>Android Studio</li><li>VS Code</li><li>HTML · CSS · JS</li><li>Arduino</li><li>Bitsy</li></ul></article>
-<article class="kit-card pnl"><p class="pixel">Slot 03</p><h3>Office &amp; ops</h3><ul class="tools"><li>Word</li><li>Excel</li><li>PowerPoint</li><li>CarPro Systems</li><li>Jira</li></ul></article>
-<article class="kit-card pnl"><p class="pixel">Slot 04</p><h3>Languages</h3><ul class="tools"><li>English · Fluent</li><li>Filipino · Fluent</li></ul></article>
-<article class="kit-card kit-wide pnl"><p class="pixel">Side quests</p><h3>Off the clock</h3><p>I write short stories and edit video skits and commercials.</p></article>
-</div>
-</div>
-</section>
-</div>
-<div class="screen" id="screen-quests" data-sid="quests" data-label="03 · Quest log">
-<section class="sec pat-dots" id="quests" style="--c:var(--normal)" aria-labelledby="quests-title">
-<div class="wrap">
-<div class="sec-head">
-<p class="pixel">03 · Experience</p>
-<h2 class="rh" id="quests-title" tabindex="-1"><span class="vh">Quest log</span><span class="rn" aria-hidden="true" style="--n:5"><span class="rw"><span class="ch rb" style="--r:1.8deg;--s:1.07;--y:-0.02em;--i:0">Q</span><span class="ch w" style="--r:-1.1deg;--s:1.00;--y:0.02em;--i:1">U</span><span class="ch w" style="--r:0.9deg;--s:1.00;--y:-0.03em;--i:2">E</span><span class="ch w" style="--r:-1.2deg;--s:1.00;--y:0.00em;--i:3">S</span><span class="ch k" style="--r:3.0deg;--s:1.04;--y:0.01em;--i:4">T</span></span><span class="sp"></span><span class="rw"><span class="ch w" style="--r:-1.6deg;--s:1.00;--y:-0.01em;--i:5">L</span><span class="ch w" style="--r:-1.7deg;--s:1.00;--y:-0.03em;--i:6">O</span><span class="ch rb" style="--r:-1.6deg;--s:1.03;--y:-0.01em;--i:7">G</span></span></span></h2><button class="back" type="button" data-back><span class="arr" aria-hidden="true">◀</span> Back<span class="k"> · Esc</span></button>
-</div>
-<ol class="quests">
-<li class="quest pnl">
-<div class="q-side"><span class="status on">Active</span><span class="when">2026 – Present</span></div>
-<div>
-<h3>Co-Founder &amp; CMO</h3>
-<p class="org">Matech L.L.C. · Sharjah Media City, UAE</p>
-<ul>
-<li>Built Matech's brand voice, including the tagline "Any Terminal. One System. Total Control."</li>
-<li>Launched the LinkedIn company page and run its content plan with all four founders.</li>
-<li>Design brand assets end to end: product logos, terminal UI themes, website prototypes and business cards.</li>
-</ul>
-</div>
-</li>
-<li class="quest pnl">
-<div class="q-side"><span class="status">Cleared</span><span class="when">Nov 2024 – Oct 2026</span></div>
-<div>
-<h3>Fleet Coordinator</h3>
-<p class="org">MOOV by Al Futtaim · Rental · Dubai</p>
-<ul>
-<li>Planned daily deliveries and collections, and briefed drivers before every trip.</li>
-<li>Inspected vehicles before dispatch and routed them to maintenance when needed.</li>
-<li>Kept customers updated on delivery times and schedule changes.</li>
-<li>Managed fleet stock across breakdown, exchange, sales and registration renewal teams.</li>
-<li>Covered vehicle breakdowns when the breakdown team was unavailable.</li>
-<li>Digitized handwritten plate logbooks into structured, color-coded Excel workbooks.</li>
-</ul>
-</div>
-</li>
-<li class="quest pnl">
-<div class="q-side"><span class="status">Cleared</span><span class="when">Sep 2024</span></div>
-<div>
-<h3>Data Entry (part-time)</h3>
-<p class="org">Jose Garizaldy Gomez Dental Clinic · Dubai</p>
-<ul>
-<li>Updated patient records and supported insurance claims.</li>
-<li>Fixed clinic computer and device issues.</li>
-</ul>
-</div>
-</li>
-<li class="quest pnl">
-<div class="q-side"><span class="status">Cleared</span><span class="when">Dec 2020 – Aug 2024</span></div>
-<div>
-<h3>Digital Artist &amp; Graphic Designer</h3>
-<p class="org">Freelance · Digital Art Commissions · Dubai</p>
-<ul>
-<li>Created custom portraits, business cards and company profiles from each client's brief.</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</section>
-</div>
-
-<div class="screen" id="screen-matech" data-sid="matech" data-label="04 · Matech work">
+<div class="screen" id="screen-matech" data-sid="matech" data-label="02 · Matech work">
 <section class="sec sec-alt pat-burst" id="matech" style="--c:var(--psychic)" aria-labelledby="matech-title">
 <div class="wrap">
 <div class="sec-head">
-<p class="pixel">04 · Now · Co-Founder &amp; CMO, Matech</p>
+<p class="pixel">02 · Now · Co-Founder &amp; CMO, Matech</p>
 <div class="mtitle"><span class="mlogo" role="img" aria-label="Matech logo"><svg viewBox="0 0 2207 2207" aria-hidden="true"><circle cx="1103.5" cy="1103.5" r="1103.5" fill="#1B2138"/><circle cx="1103.15" cy="1103.16" r="1041.08" fill="#2E3661"/><g class="mlogo-eyes"><circle cx="610.718" cy="1163.85" r="161.042" fill="#FFFFFF"/><circle cx="1596.28" cy="1163.85" r="161.042" fill="#FFFFFF"/></g></svg></span><h2 class="rh" id="matech-title" tabindex="-1"><span class="vh">Matech work</span><span class="rn" aria-hidden="true" style="--n:6"><span class="rw"><span class="ch w" style="--r:0.7deg;--s:1.00;--y:0.03em;--i:0">M</span><span class="ch rb" style="--r:0.2deg;--s:1.03;--y:-0.02em;--i:1">A</span><span class="ch w" style="--r:1.4deg;--s:1.00;--y:-0.01em;--i:2">T</span><span class="ch w" style="--r:0.0deg;--s:1.00;--y:-0.03em;--i:3">E</span><span class="ch k" style="--r:-1.3deg;--s:1.02;--y:-0.02em;--i:4">C</span><span class="ch w" style="--r:0.3deg;--s:1.00;--y:-0.01em;--i:5">H</span></span><span class="sp"></span><span class="rw"><span class="ch w" style="--r:-1.9deg;--s:1.00;--y:-0.00em;--i:6">W</span><span class="ch w" style="--r:1.0deg;--s:1.00;--y:0.01em;--i:7">O</span><span class="ch rb" style="--r:-2.2deg;--s:1.05;--y:0.00em;--i:8">R</span><span class="ch w" style="--r:-0.4deg;--s:1.00;--y:-0.02em;--i:9">K</span></span></span></h2><button class="back" type="button" data-back><span class="arr" aria-hidden="true">◀</span> Back<span class="k"> · Esc</span></button></div>
 <p>Two products from Matech's payment platform: themes for the CerePay terminal, and the Cerebro console that runs the fleet.</p>
 </div>
@@ -1344,13 +1276,72 @@ body:not([data-at="home"]) #hud-bottom .k-enter { display: none; }
 </section>
 </div>
 
-<div class="screen" id="screen-projects" data-sid="projects" data-label="05 · Stage select">
+<div class="screen" id="screen-work" data-sid="work" data-label="03 · Work experience and projects">
+<section class="sec pat-dots" id="quests" style="--c:var(--normal)" aria-labelledby="quests-title">
+<div class="wrap">
+<div class="sec-head">
+<p class="pixel">03 · Experience</p>
+<h2 class="rh rh-long" id="quests-title" tabindex="-1"><span class="vh">Work Experience and Projects</span><span class="rn" aria-hidden="true" style="--n:10"><span class="rw"><span class="ch rb" style="--r:-2.5deg;--s:1.06;--y:0.02em;--i:0">W</span><span class="ch w" style="--r:-1.3deg;--s:1.00;--y:-0.02em;--i:1">O</span><span class="ch w" style="--r:1.6deg;--s:1.00;--y:0.01em;--i:2">R</span><span class="ch w" style="--r:-1.7deg;--s:1.00;--y:-0.02em;--i:3">K</span></span><span class="sp"></span><span class="rw"><span class="ch w" style="--r:0.4deg;--s:1.00;--y:0.00em;--i:4">E</span><span class="ch w" style="--r:-1.6deg;--s:1.00;--y:-0.01em;--i:5">X</span><span class="ch w" style="--r:-1.7deg;--s:1.00;--y:-0.03em;--i:6">P</span><span class="ch k" style="--r:-1.6deg;--s:1.03;--y:-0.01em;--i:7">E</span><span class="ch w" style="--r:1.6deg;--s:1.00;--y:0.02em;--i:8">R</span><span class="ch rb" style="--r:-1.7deg;--s:1.06;--y:0.02em;--i:9">I</span><span class="ch w" style="--r:1.4deg;--s:1.00;--y:0.02em;--i:10">E</span><span class="ch w" style="--r:-0.9deg;--s:1.00;--y:-0.01em;--i:11">N</span><span class="ch k" style="--r:-2.3deg;--s:1.07;--y:0.01em;--i:12">C</span><span class="ch w" style="--r:2.0deg;--s:1.00;--y:-0.01em;--i:13">E</span></span><span class="sp"></span><span class="rw"><span class="ch rb" style="--r:2.9deg;--s:1.05;--y:0.02em;--i:14">A</span><span class="ch w" style="--r:-0.2deg;--s:1.00;--y:-0.03em;--i:15">N</span><span class="ch w" style="--r:0.2deg;--s:1.00;--y:-0.02em;--i:16">D</span></span><span class="sp"></span><span class="rw"><span class="ch w" style="--r:0.6deg;--s:1.00;--y:-0.02em;--i:17">P</span><span class="ch k" style="--r:2.2deg;--s:1.04;--y:0.02em;--i:18">R</span><span class="ch w" style="--r:0.7deg;--s:1.00;--y:-0.03em;--i:19">O</span><span class="ch rb" style="--r:-0.4deg;--s:1.04;--y:0.00em;--i:20">J</span><span class="ch w" style="--r:0.9deg;--s:1.00;--y:0.03em;--i:21">E</span><span class="ch w" style="--r:-1.2deg;--s:1.00;--y:0.00em;--i:22">C</span><span class="ch w" style="--r:1.4deg;--s:1.00;--y:-0.02em;--i:23">T</span><span class="ch k" style="--r:-2.9deg;--s:1.05;--y:-0.00em;--i:24">S</span></span></span></h2><button class="back" type="button" data-back><span class="arr" aria-hidden="true">◀</span> Back<span class="k"> · Esc</span></button>
+</div>
+<ol class="quests">
+<li class="quest pnl">
+<div class="q-side"><span class="status on">Active</span><span class="when">2026 – Present</span></div>
+<div>
+<h3>Co-Founder &amp; CMO</h3>
+<p class="org">Matech L.L.C. · Sharjah Media City, UAE</p>
+<ul>
+<li>Built Matech's brand voice, including the tagline "Any Terminal. One System. Total Control."</li>
+<li>Launched the LinkedIn company page and run its content plan with all four founders.</li>
+<li>Design brand assets end to end: product logos, terminal UI themes, website prototypes and business cards.</li>
+</ul>
+</div>
+</li>
+<li class="quest pnl">
+<div class="q-side"><span class="status">Cleared</span><span class="when">Nov 2024 – Oct 2026</span></div>
+<div>
+<h3>Fleet Coordinator</h3>
+<p class="org">MOOV by Al Futtaim · Rental · Dubai</p>
+<ul>
+<li>Planned daily deliveries and collections, and briefed drivers before every trip.</li>
+<li>Inspected vehicles before dispatch and routed them to maintenance when needed.</li>
+<li>Kept customers updated on delivery times and schedule changes.</li>
+<li>Managed fleet stock across breakdown, exchange, sales and registration renewal teams.</li>
+<li>Covered vehicle breakdowns when the breakdown team was unavailable.</li>
+<li>Digitized handwritten plate logbooks into structured, color-coded Excel workbooks.</li>
+</ul>
+</div>
+</li>
+<li class="quest pnl">
+<div class="q-side"><span class="status">Cleared</span><span class="when">Sep 2024</span></div>
+<div>
+<h3>Data Entry (part-time)</h3>
+<p class="org">Jose Garizaldy Gomez Dental Clinic · Dubai</p>
+<ul>
+<li>Updated patient records and supported insurance claims.</li>
+<li>Fixed clinic computer and device issues.</li>
+</ul>
+</div>
+</li>
+<li class="quest pnl">
+<div class="q-side"><span class="status">Cleared</span><span class="when">Dec 2020 – Aug 2024</span></div>
+<div>
+<h3>Digital Artist &amp; Graphic Designer</h3>
+<p class="org">Freelance · Digital Art Commissions · Dubai</p>
+<ul>
+<li>Created custom portraits, business cards and company profiles from each client's brief.</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</section>
+
 <section class="sec gray pat-stripes" id="projects" style="--c:var(--fire)" aria-labelledby="projects-title">
 <div class="wrap">
 <div class="sec-head">
 <div class="crowd" aria-hidden="true"><i></i><i></i><i></i></div>
-<p class="pixel">05 · 2021 – 2024 · University, indie and client work</p>
-<h2 class="rh" id="projects-title" tabindex="-1"><span class="vh">Stage select</span><span class="rn" aria-hidden="true" style="--n:6"><span class="rw"><span class="ch w" style="--r:1.9deg;--s:1.00;--y:-0.00em;--i:0">S</span><span class="ch rb" style="--r:2.5deg;--s:1.05;--y:0.00em;--i:1">T</span><span class="ch w" style="--r:0.1deg;--s:1.00;--y:-0.02em;--i:2">A</span><span class="ch w" style="--r:-0.0deg;--s:1.00;--y:-0.00em;--i:3">G</span><span class="ch k" style="--r:1.2deg;--s:1.06;--y:0.03em;--i:4">E</span></span><span class="sp"></span><span class="rw"><span class="ch rb" style="--r:1.3deg;--s:1.03;--y:-0.00em;--i:5">S</span><span class="ch w" style="--r:1.3deg;--s:1.00;--y:0.01em;--i:6">E</span><span class="ch w" style="--r:1.1deg;--s:1.00;--y:-0.02em;--i:7">L</span><span class="ch w" style="--r:1.6deg;--s:1.00;--y:-0.00em;--i:8">E</span><span class="ch k" style="--r:-0.4deg;--s:1.05;--y:-0.01em;--i:9">C</span><span class="ch w" style="--r:-1.6deg;--s:1.00;--y:0.03em;--i:10">T</span></span></span></h2><button class="back" type="button" data-back><span class="arr" aria-hidden="true">◀</span> Back<span class="k"> · Esc</span></button>
+<p class="pixel">2021 – 2024 · University, indie and client work</p>
+<h3 class="rh rh3" id="projects-title" tabindex="-1"><span class="vh">Projects</span><span class="rn" aria-hidden="true" style="--n:8"><span class="rw"><span class="ch rb" style="--r:0.2deg;--s:1.03;--y:-0.00em;--i:0">P</span><span class="ch w" style="--r:-0.1deg;--s:1.00;--y:0.01em;--i:1">R</span><span class="ch k" style="--r:1.6deg;--s:1.08;--y:-0.03em;--i:2">O</span><span class="ch w" style="--r:0.7deg;--s:1.00;--y:-0.02em;--i:3">J</span><span class="ch w" style="--r:-0.2deg;--s:1.00;--y:0.02em;--i:4">E</span><span class="ch w" style="--r:0.8deg;--s:1.00;--y:0.02em;--i:5">C</span><span class="ch rb" style="--r:-2.7deg;--s:1.07;--y:-0.00em;--i:6">T</span><span class="ch w" style="--r:-0.2deg;--s:1.00;--y:-0.00em;--i:7">S</span></span></span></h3>
 <p>Ten projects from Bath Spa, indie game teams and my first clients.</p>
 </div>
 <ol class="projects" aria-label="Projects">
@@ -1369,11 +1360,12 @@ body:not([data-at="home"]) #hud-bottom .k-enter { display: none; }
 </section>
 
 </div>
-<div class="screen" id="screen-art" data-sid="art" data-label="06 · Art gallery">
+
+<div class="screen" id="screen-art" data-sid="art" data-label="04 · Art gallery">
 <section class="sec sec-alt pat-burst" id="art" style="--c:var(--fairy)" aria-labelledby="art-title">
 <div class="wrap">
 <div class="sec-head">
-<p class="pixel">06 · Digital and traditional drawing</p>
+<p class="pixel">04 · Digital and traditional drawing</p>
 <h2 class="rh" id="art-title" tabindex="-1"><span class="vh">Art gallery</span><span class="rn" aria-hidden="true" style="--n:7"><span class="rw"><span class="ch w" style="--r:-1.7deg;--s:1.00;--y:-0.01em;--i:0">A</span><span class="ch w" style="--r:-1.9deg;--s:1.00;--y:-0.03em;--i:1">R</span><span class="ch k" style="--r:0.3deg;--s:1.05;--y:-0.02em;--i:2">T</span></span><span class="sp"></span><span class="rw"><span class="ch rb" style="--r:-1.7deg;--s:1.07;--y:-0.00em;--i:3">G</span><span class="ch w" style="--r:0.6deg;--s:1.00;--y:-0.02em;--i:4">A</span><span class="ch w" style="--r:1.9deg;--s:1.00;--y:0.02em;--i:5">L</span><span class="ch w" style="--r:0.0deg;--s:1.00;--y:-0.03em;--i:6">L</span><span class="ch w" style="--r:-1.9deg;--s:1.00;--y:0.02em;--i:7">E</span><span class="ch k" style="--r:-0.3deg;--s:1.08;--y:0.03em;--i:8">R</span><span class="ch w" style="--r:0.1deg;--s:1.00;--y:0.03em;--i:9">Y</span></span></span></h2><button class="back" type="button" data-back><span class="arr" aria-hidden="true">◀</span> Back<span class="k"> · Esc</span></button>
 </div>
 <div class="art">
@@ -1396,11 +1388,11 @@ body:not([data-at="home"]) #hud-bottom .k-enter { display: none; }
 </section>
 </div>
 
-<div class="screen" id="screen-achievements" data-sid="achievements" data-label="07 · Achievements">
+<div class="screen" id="screen-achievements" data-sid="achievements" data-label="05 · Achievements">
 <section class="sec pat-burst-c" id="achievements" style="--c:var(--gold)" aria-labelledby="ach-title">
 <div class="wrap">
 <div class="sec-head">
-<p class="pixel">07 · Awards and honours</p>
+<p class="pixel">05 · Awards and honours</p>
 <h2 class="rh rh-long" id="ach-title" tabindex="-1"><span class="vh">Achievements</span><span class="rn" aria-hidden="true" style="--n:12"><span class="rw"><span class="ch k" style="--r:-0.2deg;--s:1.03;--y:0.01em;--i:0">A</span><span class="ch w" style="--r:0.9deg;--s:1.00;--y:-0.02em;--i:1">C</span><span class="ch w" style="--r:-1.4deg;--s:1.00;--y:-0.03em;--i:2">H</span><span class="ch w" style="--r:1.8deg;--s:1.00;--y:-0.00em;--i:3">I</span><span class="ch rb" style="--r:-2.9deg;--s:1.04;--y:-0.03em;--i:4">E</span><span class="ch w" style="--r:-1.8deg;--s:1.00;--y:-0.00em;--i:5">V</span><span class="ch k" style="--r:1.6deg;--s:1.06;--y:-0.02em;--i:6">E</span><span class="ch w" style="--r:-1.2deg;--s:1.00;--y:0.01em;--i:7">M</span><span class="ch rb" style="--r:-2.5deg;--s:1.07;--y:-0.01em;--i:8">E</span><span class="ch w" style="--r:-0.3deg;--s:1.00;--y:0.02em;--i:9">N</span><span class="ch w" style="--r:-1.3deg;--s:1.00;--y:0.02em;--i:10">T</span><span class="ch w" style="--r:-1.7deg;--s:1.00;--y:-0.03em;--i:11">S</span></span></span></h2><button class="back" type="button" data-back><span class="arr" aria-hidden="true">◀</span> Back<span class="k"> · Esc</span></button>
 </div>
 <div class="awards">
@@ -1436,12 +1428,32 @@ body:not([data-at="home"]) #hud-bottom .k-enter { display: none; }
 </section>
 </div>
 
-<div class="screen" id="screen-contact" data-sid="contact" data-label="08 · Contact">
+<div class="screen" id="screen-tools" data-sid="tools" data-label="06 · Tools and skills">
+<section class="sec sec-alt gray pat-dots" id="arsenal" style="--c:var(--electric)" aria-labelledby="arsenal-title">
+<div class="wrap">
+<div class="sec-head">
+<div class="crowd" aria-hidden="true"><i></i><i></i><i></i></div>
+<p class="pixel">06 · Software and languages</p>
+<h2 class="rh" id="arsenal-title" tabindex="-1"><span class="vh">Tools and Skills</span><span class="rn" aria-hidden="true" style="--n:6"><span class="rw"><span class="ch k" style="--r:-2.0deg;--s:1.05;--y:0.01em;--i:0">T</span><span class="ch w" style="--r:1.7deg;--s:1.00;--y:0.01em;--i:1">O</span><span class="ch rb" style="--r:-3.4deg;--s:1.05;--y:0.00em;--i:2">O</span><span class="ch w" style="--r:-0.4deg;--s:1.00;--y:0.01em;--i:3">L</span><span class="ch w" style="--r:1.8deg;--s:1.00;--y:-0.01em;--i:4">S</span></span><span class="sp"></span><span class="rw"><span class="ch w" style="--r:0.2deg;--s:1.00;--y:-0.03em;--i:5">A</span><span class="ch k" style="--r:4.0deg;--s:1.06;--y:0.02em;--i:6">N</span><span class="ch w" style="--r:-0.2deg;--s:1.00;--y:0.02em;--i:7">D</span></span><span class="sp"></span><span class="rw"><span class="ch w" style="--r:0.0deg;--s:1.00;--y:-0.03em;--i:8">S</span><span class="ch rb" style="--r:-3.4deg;--s:1.06;--y:0.02em;--i:9">K</span><span class="ch w" style="--r:-0.6deg;--s:1.00;--y:0.02em;--i:10">I</span><span class="ch k" style="--r:0.3deg;--s:1.04;--y:-0.01em;--i:11">L</span><span class="ch w" style="--r:1.5deg;--s:1.00;--y:-0.01em;--i:12">L</span><span class="ch w" style="--r:0.6deg;--s:1.00;--y:-0.01em;--i:13">S</span></span></span></h2><button class="back" type="button" data-back><span class="arr" aria-hidden="true">◀</span> Back<span class="k"> · Esc</span></button>
+<p>Give me any tool, I'll give you good work.</p>
+</div>
+<div class="kit">
+<article class="kit-card pnl"><p class="pixel">Slot 01</p><h3>Design &amp; video</h3><ul class="tools"><li>Photoshop</li><li>Illustrator</li><li>Figma</li><li>Canva</li><li>MediBang</li><li>CapCut</li></ul></article>
+<article class="kit-card pnl"><p class="pixel">Slot 02</p><h3>Code</h3><ul class="tools"><li>C++</li><li>Python</li><li>C#</li><li>PHP</li><li>Kotlin</li><li>Unity</li><li>Android Studio</li><li>VS Code</li><li>HTML · CSS · JS</li><li>Arduino</li><li>Bitsy</li></ul></article>
+<article class="kit-card pnl"><p class="pixel">Slot 03</p><h3>Office &amp; ops</h3><ul class="tools"><li>Word</li><li>Excel</li><li>PowerPoint</li><li>CarPro Systems</li><li>Jira</li></ul></article>
+<article class="kit-card pnl"><p class="pixel">Slot 04</p><h3>Languages</h3><ul class="tools"><li>English · Fluent</li><li>Filipino · Fluent</li></ul></article>
+<article class="kit-card kit-wide pnl"><p class="pixel">Side quests</p><h3>Off the clock</h3><p>I write short stories and edit video skits and commercials.</p></article>
+</div>
+</div>
+</section>
+</div>
+
+<div class="screen" id="screen-contact" data-sid="contact" data-label="07 · Contact">
 <section class="sec sec-alt gray pat-dots" id="contact" style="--c:var(--grass)" aria-labelledby="contact-title">
 <div class="wrap">
 <div class="sec-head">
 <div class="crowd" aria-hidden="true"><i></i><i></i><i></i></div>
-<p class="pixel">08 · Continue?</p>
+<p class="pixel">07 · Continue?</p>
 <h2 class="rh" id="contact-title" tabindex="-1"><span class="vh">Let&#x27;s talk</span><span class="rn" aria-hidden="true" style="--n:5"><span class="rw"><span class="ch w" style="--r:-1.8deg;--s:1.00;--y:0.01em;--i:0">L</span><span class="ch w" style="--r:0.7deg;--s:1.00;--y:-0.02em;--i:1">E</span><span class="ch rb" style="--r:3.3deg;--s:1.03;--y:0.03em;--i:2">T</span><span class="ch w" style="--r:0.6deg;--s:1.00;--y:-0.01em;--i:3">&#x27;</span><span class="ch w" style="--r:-0.3deg;--s:1.00;--y:-0.01em;--i:4">S</span></span><span class="sp"></span><span class="rw"><span class="ch w" style="--r:1.3deg;--s:1.00;--y:0.01em;--i:5">T</span><span class="ch k" style="--r:-0.5deg;--s:1.05;--y:-0.03em;--i:6">A</span><span class="ch w" style="--r:-1.2deg;--s:1.00;--y:-0.02em;--i:7">L</span><span class="ch w" style="--r:-0.1deg;--s:1.00;--y:0.00em;--i:8">K</span></span></span></h2><button class="back" type="button" data-back><span class="arr" aria-hidden="true">◀</span> Back<span class="k"> · Esc</span></button>
 <p>Ready for the next quest. For projects, collaborations or a quick hello.</p>
 </div>
@@ -1455,6 +1467,11 @@ body:not([data-at="home"]) #hud-bottom .k-enter { display: none; }
 </div>
 </div>
 </section>
+
+
+
+
+
 <footer class="foot">
 <div class="wrap">
 <span>© 2026 Isidal Kent A. Carino · Designed with Claude</span>
@@ -6202,11 +6219,50 @@ body:not([data-at="home"]) #hud-bottom .k-enter { display: none; }
   var where = document.getElementById('hud-where');
   var wipeEl = document.getElementById('wipe');
   var items = Array.prototype.slice.call(document.querySelectorAll('#screen-home .menu a'));
+  // old links keep working: Quest log and Stage select are now Work, Arsenal is Tools
+  var alias = { top: 'home', quests: 'work', projects: 'work', arsenal: 'tools' };
+  function resolve(id) { return alias[id] || id; }
+
+  // Menu sounds (original, synthesised): "sel" when the selection moves or a Back button is hovered,
+  // "flip" when a menu choice is clicked, "exit" when going back. Decoded up front; browsers only let them play after the
+  // visitor's first click, tap or key press.
+  var SFX = { sel: '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ETQNMEAW2wdfAwNLsNcXY0ptJlKtTgDFVspoOu4TxOKbAi+Meawx9ToubK1vMwbRe8UUqhqHHqryGDISA8B84pF44PxDEI+Q0nc1ENW////+RgvH1dAAD/////bdfwzCE0oA8u01apLoZoKF7pyIyqkZrOQJAztN3VEYB+H3GauQ15sg4lOChLzO+1aAS2cDUqbrigwI7KcCz1cl23chhaSHzWyUc//7cMQogw7tVSpA6VrR1qplDA0e6JqlzQoOfRgrXJcuqSOazqNyEGk0eD0Wh8TFXK2c9Ua1P///+aBCwgAABH5c3rutf//hl+XMf3Uv2p/GrYqw5PT0APjdf6PvFNRIgAgPSkzGkmIEJVpsyjaKbMEXkul3WyTSXJdGAWXFyWAhB59k4m7rBqwBcK6infS8TYoceaHWBVZiNTb6AFiQEo+WIChULFWONONmu/////iYSzAAD///3zLX75lr8beG7Ne9Kp6cga7A85EcGtvREWJum6UHvyKHg/SnS/sva2FmYZZUtXy9aiDxKZLAJDwptsFRIBQIDFiMENdbumarehSl2wRvYMa0wFlkPwW77qunKqaLQhAeMBKUPMNzp6p7P////cJn//53+a/LfPyuflnvLtSfvzsSqw//+3LERAPOgVUiQGj3QdcqY4ANHui6EUgl+2ezzIn9oqZAOIqwnBZS8yfjyjI89JGjLNr8QnO0j8rtuqapc4FFl9pEkwg2QFPFW9H6AYbBqxM981QpoObDzlMuVE/8qiUZogflAYNDxcJZExVY1DXNo7f///8qQUA///////l6CEJRW8L1hyanL0szjk4thwo/SNhhubWwk2MejLCVg9t0cUdPnbUV47feh1G7KrPsMgIAUCZmoKBACc7cUk0QWWlvTDoSIC3C8vJnLzNdcWNMthyjYlaEQJyKCSPFmdTZzHmv0////8W/////+nRzNGeeas8dZWe401yzAluGpTCIcfCG2w0VE6YrDFZK3NBV9pBWMKD0YGUobMFXYOgCwjB1Jpjl0H1VJQBg0XJZctWCpUAiFOeYfpPVav/7cMRhg87FVRgg6PrRtiEigADuyrU5fBN2MOiziIP7FbsXxgm9vPV2xhaArU//6j//////WiQAD//3/6/6Z1MN4hpyy5qzredn47FYRAMqizOIAcKDYk2UQ6B9WuutBrEhhAd0SnMxdqxUAOUtdc7xrqZm8btJUjgVnE6oEjUr5MYAoGbtmUxftbsr7TxVzI1Pu7DooAYuEACGiIsZhY03//0//+Lf/9P//78hX/5/7+9f//lIphFHJGkaLERlsFMl0tiM7L4xA7JeCOgH8nUhLH5aIixw0UmYzE3lUGj5a5drqTboNOjyq4kVaAsZ9onGx0mj61xur9wFAMMO9J5dDU/LZTjUk0zKKIFEON9ners8WstXp/+mz/L7TFo36lU//tWfFyLn//5yNRS8IxYXUJCUMuRSqXP/+3LEgYNO9VMSQOi6wcwfYcAU60CtF4ZiEDWnAJUAbyeZ5Yi/gwgByEuirJIMYLcJaUDOeqWHWOSl1E0W5zq3k6XnGgLkNap6svpIvTTsfwqRWtO5Y40mrWNkByoyKmer/adrmGXXXYypc0212F1oe8kmJx+hNds+oUAWAFpbRUTdF27PRPt/bVbXsXXeiIgFERQtqtlT/nXjr0CoQLupGlYTgjYKJ4elMtlliUxm3Szbe9cGAFfTMafnDNdVyLbv17NfmpTZu99lVlZb/6T9etf9ula39u7r3Rev//T09P7r29OojvY7WghQQQCT2YVLtNss5eQsV7o0GacVyDZo0y/L17FrXtbAOYCWULNZlDOA0nPDay+DmmbahYn1K44y2k5cWGLutsXxbdbZQ37LM9HW+a7JXzf6s//7cMSegM99AQwAp1oBvzvhkFyLkP5FR+bTVk+7FtZVtpdErajt6UW9JgwNyWUKmdpJGDwwmr/CaFhJhNcN/JhJ9FRTJhJmiRMKFPovr1vxcXSwB4FSYPxyPEWQ0upDKzCRwKIiok4dR0V5Rjlo6OWn0sn6o5U6OWZypo5UMrFRyo5SGR1ZNyqxlb6kcv+sysVHLNKnVuVWM4iIAwiQsylR/3lYSGOKhTDKTEFNRTMuMTAwqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqr/+3LEuoBOSd8HALxcgc0/nUAWF4GqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqkxBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqv/7cMRtg8AAAaQAAAAgAAA0gAAABKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqo=', flip: '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', exit: 'SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjYwLjE2LjEwMAAAAAAAAAAAAAAA//twwAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAARAAAWCgAcHBwcHCoqKioqKjg4ODg4OEdHR0dHR1VVVVVVVWNjY2NjY3FxcXFxcYCAgICAgI6Ojo6OnJycnJycqqqqqqqquLi4uLi4x8fHx8fH1dXV1dXV4+Pj4+Pj8fHx8fHx//////8AAAAATGF2YzYwLjMxAAAAAAAAAAAAAAAAJAaRAAAAAAAAFgonSFwJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/7cMQAAA8BDzEUF4ACZ7EsPxbwA6rqUAAAAAAAAADGMYxjG/8UpSlP83ve973pSlKf/7//ze94jx5EpSAnCcBqxDyXquROIYhigUavf3vd+/fqxWPHjx48iapT5ve8N+8eRKQHjyJqlPm973//////936vV6vjggCAIAgZE4Pg/lDn/4nB8PhhQIAgGWAId4iIiHZmVGCiUU0Y5Gpb/jyeplLEogkFSQAY/wuXA50XBnOCGpEMVb9DJ1DFWHDBbNsl36rtWi3n/+SuNt5eoQ9Cbtu6EK226bm3I4SacMwK31n3j2vncj+rFLWSHiHEZPjO4uqXveVXqT/OcYe65PCSp7Na/4/YdWx///6W1////////ncBWN8K3//x2RvaoOv//9Q53soIiZmIh0iIBJSmXKayA8WhADf/+3LECQASqVNd/MeAGkkmKnj0j2E8E0ECYgIIHwJhLQ2gAQELNAfAhDBhngRHNRwYLipz/kv4cr9gbXBPvh8CaH0HGRgwU+oXGJB+vWDu95Y8PNIt91xv/UZvxqS2JI2PaJtnv8yKxYY3bIxvHNygxcPrWtbP//////////98U7x48YFYyRIbPBc2CC+ixnsKSNB1CjbBQqb7e24VDQABPq8r5GI8mxoFjhHGJmrSjQ+EfjlCgUisCuULO8gu2Ovjx4m7Kg3zHFcAwEpAIwtYLQAdD+H8UxJ8MkFtQQRCj0AVJyUJkiAmWPFwFhEsJywlmOCQQBiACAAHAHB4AwIgGFYGVASA0CQpZWaut//////vYW3SiBGjRyQMI1nMNuaQqIrQgRqpMGaeanrb+ZdBFAAAn9gHQfGw7P/7cMQHgBGU+1PGYTUKS50p+PyyaXgBTpRAobjpw/K3iooCtOfHJ9iquRTzP3GBgAcBspn2EWB3QCQvUkUldGWRtZjcxZiMKgJrMRijuwdAtt76zWZBKK8afydh+gawpuyeBkvIBc5jrLmkiYKgiGQzAia8a/rf//VyQRIxWKAoCAYOhsYFIuPEpEXJViZr8RQ0k2a0MikAAACHoeAwCVHemHipMkzZUup0PQ8nJmN7M4KKre0VhuXr6UBMNM3YTjBNKIDfnE+dKg1EsLIEgmSpiKal+ntgt0IuuZ/GsqbsEe6JMmgF5WZzipFBC/7Xy7iPJd4vKwwuUrprLDVixSHrtjuqzMzNG3ie0SBIBoTEoNy8MhYMw9BIzA6anRJMaHR9C7atWieHQQAAAAAA+U6kujZsIi6IxZH/+3LECYHR0MtHxmsOilCWZ5G9YphbBcJtDIZO89GSu47ATOw4Mapwfm+CdxusZmhRpsblsVYYhyThYggwbhIoD3xIKdyyQEdeiVKbc6l0iEowQhLoELTysAaBuzII1gYuy1sKAVjsDSnUzZ3lvl2tDjxrHZesIX8QUVnULQ0SvVoSKbsmMy6XSp2nGp4du3lj8COabhSK2sZxlGUCylubyTb/OVBd4wgATNEQ4YMJmGgIFBzZ8cyX2O3ejPns34pMkDFTAoIJMxoIzwYBqYhYfBBiTxqyjCwwpIVNU/jJDDSBDAETWhzQJDkgDQOzgPzUtjYmguBHgqm0ljkbnctS+DIEUrQDlwwEMaACThURkCYVFVIC6k8ZVGIaFKeyOTcYpR2YrTIQAAAAGAWqtM+tdW2SsvYs0Ha0pf/7cMQKgdIcnTWM805KOJFlVZ7ti+pSn6AkzhVNIEFEcLDg00xjBdrMbyQ6GxDKYkMlFc2CYW2gK0GRB0EBlwuPYuKixk6KkAFJM0bCjczJ0xOs7qs0HQ5688cY06Qz6A0pQkCossSfWapfcF9khEpTFkzKlzJgwudBzImgmfCGGMhB1VZIpty9y/10x6nsDk5FJVglnyzmsylBIv0cGHikjTFlEiinIwBFoFBQDDPM+mfN86GOE2qNASGMfSzG1oKlKOBqA2YkDmDtRioIYKVGvlI8aGTmBnEQcUSHB3JlcceJpmYQB29UcOnCpKPHqPzwvBBLgtGTRMJAy5xhQUAQYzI4HUswlSMPNzVEUyQLMEFTJjEOIjAAdaj5yG0Limb+uBGC3oFCYdBwYABEOQxADmCEhgyGanX/+3LEDQPPrHsoDfdsCgkN48GvcUmmc7OnerZnOzum72xljsbICmtKhiSMZ8omsD5uIuIAoAHIRABE0ZGVBB6bj/mb8htY6a8xiRmZMJhYAHgagf5sKu0GC/RixUZMBGSrJmpwZ4ijpoaKeGYlxjgygAL9NZjlPgGSlxnsAwsiPgAC5Jhggw2B0oi4mOymCgI0ZBRTxpoAEGgCbMZDYZRgviNmvmEDDOZcCplommlEsawWph5TGCAaYwFh0GFni1Wd0Uh7fPHd5IGVIxgHQwAItptvsMAwQBUyCXTN59M6gE0UgDT5FNUrQ0mfDO5wMmgowQEVAGnwJL64GoaFAAtK9RARmJlBIfmklJhkSbgkmAoJYYyxFhnwMUGCiLqYNgGJvG6GwF2DticB0hpMyGIxEYkCZpxMGEFuYf/7cMQfg07wZRoN+4hJ7IsiRb900AVx67+HlzybTQxgU9gZ0mEwkyVK5MYwYGgqOTRyCMJKc26MDXynMaAAwOCTHA9DBQiU9KynHhN9UgiBwqFkgwYsMGwCJiRqbGLn9oJVBMMHQVcwJReDYdZdNqYuEwphDjA0G7NZxTNR0LNWHRMISNNMgMMVh7OB51ObZ6OXNHO8pBDIkMQQwRoMHQ+MHwVEYUGMhNGWB3GmBWGkpamtCvmcZ+Gao+GBYPkQYJBNrFrI8QrTXSABQKBA0qjhkpCYezGBF51V+Z17GGEMEaichJvjtnGaCAgYeDGY6l2YKrEYJD6ZTEwYEhWaDKwdbWsdFVeZgFCaAGaYVBwYFBajSjYYJkCZmoSassGY6rcYllOZcDOCREDhiQpfZG1kDQp2+Z1AIq//+3LEOAMPTFUQLfumQZ0JIwme8MDY/6P//+r////9B/v84S3wumTHGK2CbTldM1g3Q8oxSbo2uxTCYlT6EA9M4McyIQDGI5OWvM5WizfxpEYkIh2gqiaDQukUACqbIQ5kUxEx2MMBFcj9yy3gCZnU4aXaiU3rS3+n+lH5n0fDk22v+r+v/1pn2HCA2BQY7jNxJMJJMtVO3CN4EEkwdyBTLU5zLEdTPwEzLgyTPMsDeyLjgSpTQ5LQ5G0IAgPy3RiIPRlQgRqoExoqdBlWORgUABMCa3Yaltqy9UR/Tt6t316Ld1EboxXuVZik/6z7O6ptm5et9JgBi8yxIy6o1Fs0/E610xBCLzKtfQPnWOMdxBMMhMMf1oMQxxMtC6Nps0OASOMmTCMbQlFg/MFgHMOwWMWgMNPRbM9CtP/7cMRZgw3ERRAte6YBtgghxa90gMLgUDg2bWPNJbA33HzgaqGiSEI5bbv6r23+lXQjd/0cqz///9lH/6yFBGagCKvA/QDD/MDEEYwWRHTO5YzM6oO8yiDYxkS4yLHsxuBAzzWs4fAQz8AcwxDZEJOkGBOZKmWQoEZcjkLDMXpdqZY8Kgd3sUvc76D/eLXxZLbDXVf1PMD1TbmkKXamfnZ80jxefL63jLJk50dSVAZ54aHqYPwPhg3k/mq4NoYAwsZh6YxmEHJkaLhj0bBzMr5gARIGLQBAsXgFg4MgVBM5B7MUgpTEfuWW7AXWj3lCyFstPU2IKLQ+0v/r8Z9Kee9Vf176LLd7RTZ/T/t1KkZhlQsVGmmCGWtGCYLWZb6k5luBQmCaGEYF4ApaIZEFMicOwyFEEjoDCKr/+3LEfYMNeDUQTPuiQY2GocWvdEixoDgZbwmuhQhDXCqirFg7jXECWxDWsSBSjRxYYuq1zqg7a/t39iqE7b9rpDkEH0ET7EN5K7N+ty5l43kIGZKIGOgxmUYGAwmvQC4ZJHyZSAuYhhGZPgCYgUaZLCOY6A6pUDQREAXmoplGMIWKINsweoJEAjXiRWm1BiqpSLZxxC4Vu/QKjp40eitujXapkvs31tIuX0Jwk4xjrRftq/09EpdVGWmUGThZOzA6rDRTVDxwxzAoSMjhQxSSjJ8VPTpYAh0aDpCFzIqrNem4iGzq0zcWmzwxztIWoO2Qo1U8qrvRtpIsIsFows4PiwBvcZosQA7alFsqml4jMmtTQ+f0JtK/Wu5X//9HpLcwFBkqBqYLCgYRgydrzUdDFKYOEuSiGZECqf/7cMSoAwysLQ5Ne2LBnwWhhb90QLvJAZ8giDgZbEYAkeY5EgHDuVgBA8rkkGyG5UtbBfqwB5zRgGm2VERn1OjaSMoFBQzRlLJ7cZkUq+Cqp36v6IpOtn1r6I7MzjMW4dRveoyxx1x1ZlOqLEWocX1OrihTTKmEpiBk2kww0/NBSzOk407EM3pbkwqgMTFpCmMDkMkxOyNzJIBbMDsDYv2KgiGDYMCYNgFKmD9w4EAxBjlHxe70kw59LVO+UJRRToSGZ0l9iRoCI3h/CI6xFv4u6aq/p2kn3ypZiyzzkKFfI48XswRGsmj5ej8PS5m+xbw6se/9RTuS/G0O7ZwzOHevon5VPSHe3MuNwsv5AdTeIhaTEPMtKlMajAUgRaT9l5DKsaDQhsxUfP8ljijMmDnVMqfjnTYmA4P/+3LE0wMM2C0OTPeCAgOnYQXQiniv2FiA2baIQoKOIEXKhB7SYSIRjjrWT0PtKKJpVnzhJTTp9ynGT+k0ueWpynOMhllhsgI1njLGDkJh+gWKrWLu2mEf7rK/IeT3VSBMCYAowMAfTAKAeMb1Xc4Igg0YCkzPJAx1Kw8ZOEWAMIKMwlL04HJoxLBhfMASOgQHlqLPP7yJH2RIGqLMLNbUNhjCSxId7CFkESD4Xiu/UXnY5Mr01zqmdwN/bTLne8zNtSFHN5xGtMnJZz9+3q91oQ5n7WlmNvqc2kMjbNxdVy/29PWUzRFUfd96YjaI7345uyRiLOenfspVYX5bEypZtRObvqm7mPbry4sy7Vtbuo5a0y7zWd3Y7UAGYKABYGAfMBEC8wWkbT9wtSyxjMC5k0PBwGUxhAFq8//7cMTxAhLh8QIN+GNBvIShma7sQAAfoBARS2mAfoGIPnPArgicc3TD29YNkWaFoEh+pRiuOfUK5b5O/qXLWM5eF9PJNGpm5FVMO2W0/4fEJiaX4aEzrnOMxmkj0rtrciCWw1Pd0Ch2I7GGjM5Y+iMx4coqgb5/2Qeoo5bcb9c+8fWmp9IAgMYIhQY1iSYeeyY8DaYSkIQCgYZN4cycAQVMWGDgEwHC7UJdOZYBWJxI/hY6mXS0BELM84TaqDajW6fmfeoakQrMl2YIdDtPHsd0zLrRFXWO8hm/2DqaecNOMtOZFA5/PpZkRIUuVeIk84lmf+Rn9JRH77QtNWZYY+pk2XDK9cv9XNIyPyVmloruVMLMASgQK1UtzGgQxUDPYdTox4w4LMOOPOlQMlgBTAaG8V2pdwZGYIX/+3LE/4MXVgr8L3TDQkAz4EXujGEM6dpJHI6a3iUwVKlbHUj+pa1TuLMM/spgyyrQmj0Gs5Alw+DMOHft8lm9KlYFssOZruxEmRN+IyUzBknDBwnzaxMVKrIS0EeCBJp6FVweWaFVME6IOqiKcQI6FKsLuSgaxCE1AABfkaeytI0uGD52WkopbBuNdJQMSJqtDwVLug2uksn7mcg6Cc3ut8MU972mby/FP5U/fLvH1t6neZwuq9F6qDnePmJok4dVbRe1MvC5ZJSsNpG+683CXPz5hVuzLNuP1WijOwfHSqWfMucjwspxMZPjZt1LfCajCykuy0jZJipFSo4WWhfYWf7/MrQGrlyyowbDamvBNItShSX2ZokU/bi0tKiwMRkiAUck0Akt//lkm2ZNIowSw4lsmzk0xrscAv/7cMTsghH15wAO7GbKHy1g5b0MmI39AQFTY1gEx4YVSNjWEzVeM4EK4GAhTepVfUgolgIVsYU1L8M0VVjUsKBAxPhhWGVUomUgxGsoUBICjkxrGb+gJUKAgwGB0rLDw14lLCIC/4drO88p+G1MQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+3LE8oIRcZMHDeTC4jUwHkmDDbBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/7cMRtg8AAAaQAAAAgAAA0gAAABFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=' }, sfxBuf = {}, actx = null, sfxLast = {};
+  function b64(s) { var bin = atob(s), u = new Uint8Array(bin.length); for (var k = 0; k < bin.length; k++) u[k] = bin.charCodeAt(k); return u.buffer; }
+  function decodeAll(ctx) {
+    Object.keys(SFX).forEach(function (k) {
+      if (sfxBuf[k]) return;
+      try { ctx.decodeAudioData(b64(SFX[k]), function (buf) { sfxBuf[k] = buf; }, function () {}); } catch (e) {}
+    });
+  }
+  try { var OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext; if (OAC) decodeAll(new OAC(1, 1, 44100)); } catch (e) {}
+  function sfxInit() {
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    if (actx) { if (actx.state === 'suspended') actx.resume(); return; }
+    try { actx = new AC(); decodeAll(actx); } catch (e) {}
+  }
+  ['pointerdown', 'keydown', 'touchstart'].forEach(function (ev) { window.addEventListener(ev, sfxInit, { capture: true, passive: true }); });
+  function sfx(k, gain) {
+    if (!actx || !sfxBuf[k] || actx.state !== 'running') return;
+    try {
+      if (sfxLast[k]) sfxLast[k].stop();
+      var src = actx.createBufferSource(), g = actx.createGain();
+      g.gain.value = gain || 0.8;
+      src.buffer = sfxBuf[k]; src.connect(g); g.connect(actx.destination);
+      src.start(0); sfxLast[k] = src;
+    } catch (e) {}
+  }
+  // hover sound on the Back buttons too
+  Array.prototype.forEach.call(document.querySelectorAll('[data-back]'), function (btn) {
+    btn.addEventListener('mouseenter', function () { sfx('sel'); });
+    btn.addEventListener('focus', function () { if (btn.matches && btn.matches(':focus-visible')) sfx('sel'); });
+  });
 
   // Menu selection (mouse, focus or arrow keys)
   function setSel(i, focus) {
     if (!items.length) return;
     i = (i + items.length) % items.length;
+    if (i !== sel) sfx('sel');
     items.forEach(function (a, k) { a.classList.toggle('sel', k === i); });
     sel = i;
     if (focus) items[i].focus();
@@ -6256,14 +6312,13 @@ body:not([data-at="home"]) #hud-bottom .k-enter { display: none; }
   document.addEventListener('click', function (e) {
     var t = e.target;
     if (!t || !t.closest) return;
-    if (t.closest('[data-back], [data-home]')) { e.preventDefault(); goHome(); return; }
+    if (t.closest('[data-back], [data-home]')) { e.preventDefault(); if (current !== 'home') sfx('exit', 0.9); goHome(); return; }
     var a = t.closest('a[href^="#"]');
     if (!a) return;
-    var id = a.getAttribute('href').slice(1);
-    if (id === 'top') id = 'home';
+    var id = resolve(a.getAttribute('href').slice(1));
     if (!screens[id]) return;
     e.preventDefault();
-    if (a.closest('#screen-home .menu')) lastItem = a;
+    if (a.closest('#screen-home .menu')) { lastItem = a; sfx('flip', 0.9); }
     show(id);
   });
 
@@ -6273,7 +6328,7 @@ body:not([data-at="home"]) #hud-bottom .k-enter { display: none; }
     var tag = (e.target && e.target.tagName) || '';
     if (/^(INPUT|TEXTAREA|SELECT)$/.test(tag)) return;
     if (e.key === 'Escape') {
-      if (current !== 'home') { e.preventDefault(); goHome(); }
+      if (current !== 'home') { e.preventDefault(); sfx('exit', 0.9); goHome(); }
       return;
     }
     if (current !== 'home') return;
@@ -6285,13 +6340,13 @@ body:not([data-at="home"]) #hud-bottom .k-enter { display: none; }
   }, true);
 
   window.addEventListener('popstate', function () {
-    var id = location.hash.slice(1) || 'home';
-    if (id === 'top') id = 'home';
+    var id = resolve(location.hash.slice(1) || 'home');
+    if (screens[id] && id === 'home' && current !== 'home') sfx('exit', 0.9);
     if (screens[id]) show(id, { fromHistory: true });
   });
 
   // Open straight on a section when the link has one (#about, #matech, ...)
-  var startAt = location.hash.slice(1);
+  var startAt = resolve(location.hash.slice(1));
   if (startAt && screens[startAt] && startAt !== 'home') {
     items.forEach(function (a, k) { if (a.getAttribute('href') === '#' + startAt) { lastItem = a; sel = k; } });
     swap(startAt);
