@@ -1,11 +1,13 @@
 # Isidal Kent A. Carino · Portfolio
 
-A single-page portfolio, ready for GitHub Pages. No build step.
+A menu-style, full-screen portfolio, ready for GitHub Pages. No build step.
+
+Use the arrow keys and Enter on the title screen, Esc to go back. Each section also has its own link, e.g. `#matech` or `#contact`.
 
 ## What's in this folder
 
 - `index.html`: the page.
-- `img/`: the images. They load as you scroll.
+- `img/`: the images. Each section's images load when you open it.
 - `.nojekyll`: tells GitHub to serve the files as they are.
 
 ## Put it online
@@ -22,23 +24,14 @@ To update the site later, upload the new `index.html` (and any new images) the s
 
 ## Embed it on another site
 
-Paste this where you want the portfolio to appear. Replace the URL with yours.
-It grows to the full height of the page, so there's no inner scrollbar.
+The portfolio fills the screen it's shown in, so give the frame a fixed height. Replace the URL with yours.
 
 ```html
-<iframe id="ikc-portfolio" src="https://yourusername.github.io/portfolio/"
+<iframe src="https://yourusername.github.io/portfolio/"
   title="Isidal Kent A. Carino portfolio" loading="lazy"
-  style="display:block;width:100%;height:900px;border:0"></iframe>
-<script>
-  window.addEventListener('message', function (e) {
-    var f = document.getElementById('ikc-portfolio');
-    if (!f || !e.data || e.source !== f.contentWindow) return;
-    if (e.data.type === 'ikc-portfolio:height') f.style.height = e.data.height + 'px';
-    if (e.data.type === 'ikc-portfolio:scroll') {
-      window.scrollTo({ top: f.getBoundingClientRect().top + window.scrollY + e.data.top, behavior: 'smooth' });
-    }
-  });
-</script>
+  style="display:block;width:100%;height:100vh;min-height:640px;border:0"></iframe>
 ```
 
-On Canva, use the **Embed** app and paste just the URL; the script part isn't needed there.
+To open the frame on one section, add it to the URL, e.g. `https://yourusername.github.io/portfolio/#matech`.
+
+On Canva, use the **Embed** app and paste just the URL.
