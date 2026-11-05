@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Isidal Kent A. Carino</title>
+<title>Portfolio Sky Preview</title>
 <meta property="og:title" content="Isidal Kent A. Carino · Digital Portfolio">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://isidalcarino.github.io/Portfolio/">
@@ -1178,10 +1178,52 @@ body:not([data-at="home"]) #hud-bottom .k-enter { display: none; }
   }
 }
 
+
+/* ============ Original animated background from Isidal's own drawing (clean PNG): bright sky, drifting
+   clouds, sweeping yellow bands, the character with her hair moving in the breeze, and a light TV scanline ============ */
+#bg { background: #8EC6EC !important; }
+#bg .bg-stripes, #bg .bg-star, #bg .bg-tone, #bg .bg-vig { display: none; }
+#slash { display: none; }
+body .title::after { display: none; }
+.sky, .sky > * { position: absolute; pointer-events: none; }
+.sky { inset: 0; overflow: hidden; }
+.sky-back { inset: 0; background:
+  url("img/sky-hills.webp") center bottom / auto 30vh repeat-x,
+  url("img/sky-clouds-far.webp") 0 3vh / auto 24vh repeat-x,
+  linear-gradient(180deg, #4FA9E8 0%, #8BCAF2 46%, #C6E4F7 74%, #E2F0F8 100%); }
+.sky-clouds { left: 0; top: 18vh; height: 34vh; width: calc(100vw + 143.85vh); background: url("img/sky-clouds-near.webp") 0 0 / auto 100% repeat-x; will-change: transform; }
+/* yellow bands rising to the right: a thin pale streak, a thin black line and one wide band with a white and amber edge */
+.sky-bands { inset: 0; background: linear-gradient(159deg,
+  transparent 0 21%, rgba(255, 228, 90, 0.95) 21% 24.5%, transparent 24.5% 30.5%, rgba(11, 11, 10, 0.5) 30.5% 31%, transparent 31% 63%,
+  rgba(255, 255, 255, 0.9) 63% 64.2%, #F2B400 64.2% 65.4%, #FFD400 65.4% 92%, #F2B400 92% 93%, transparent 93%); }
+/* the character, bottom-left, face about a fifth of the way across */
+.sky-hero { bottom: 0; height: 96vh; left: calc(21vw - 52.4vh); will-change: transform; }   /* beret fully in view */
+.sky-hero img { display: block; height: 100%; width: auto; }
+.sky-over { inset: 0; background:
+  repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.07) 0 1px, transparent 1px 4px),
+  linear-gradient(90deg, rgba(10, 12, 20, 0.32) 0%, rgba(10, 12, 20, 0.1) 52%, rgba(10, 12, 20, 0.08) 100%),
+  radial-gradient(ellipse at 50% 42%, transparent 58%, rgba(0, 0, 0, 0.24) 100%); }
+@media (max-width: 760px) {
+  .sky-hero { height: 72vh; left: calc(50vw - 39.3vh); opacity: 0.92; }
+  .sky-over { background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.07) 0 1px, transparent 1px 4px), linear-gradient(rgba(10, 12, 20, 0.26), rgba(10, 12, 20, 0.26)); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .sky-clouds { animation: sky-drift 90s linear infinite; }
+  .sky-hero { animation: sky-bob 7s ease-in-out infinite alternate; }
+  @keyframes sky-drift { to { transform: translateX(-143.85vh); } }
+  @keyframes sky-bob { from { transform: translateY(0.6vh); } to { transform: translateY(-0.9vh); } }
+}
 </style>
 </head>
 <body>
 <div id="bg" aria-hidden="true">
+<div class="sky" aria-hidden="true">
+<div class="sky-back"></div>
+<div class="sky-clouds"></div>
+<div class="sky-bands"></div>
+<picture class="sky-hero"><source media="(prefers-reduced-motion: reduce), (max-width: 760px)" srcset="img/hero-girl.webp"><img src="img/hero-girl-anim.webp" width="897" height="1000" alt=""></picture>
+<div class="sky-over"></div>
+</div>
 <div class="bg-stripes"></div>
 <svg class="bg-star s1" viewBox="0 0 100 100"><polygon points="50,0 61,35 98,35 68,57 79,94 50,72 21,94 32,57 2,35 39,35" fill="#000"/></svg>
 <svg class="bg-star s2" viewBox="0 0 100 100"><polygon points="50,0 61,35 98,35 68,57 79,94 50,72 21,94 32,57 2,35 39,35" fill="#B3102A"/></svg>
